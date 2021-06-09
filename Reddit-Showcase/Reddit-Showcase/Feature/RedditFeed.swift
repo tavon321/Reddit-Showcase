@@ -8,8 +8,7 @@
 import Foundation
 
 public struct RedditFeedList {
-    var limit: Int
-    var pagination: String
+    var pagination: String?
     var feedItems: [RedditFeed]
 }
 

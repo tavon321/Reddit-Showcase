@@ -7,32 +7,34 @@
 
 import Foundation
 
-public class RemoteRedditTopFeedLoader {
+public class RemoteRedditTopFeedLoader: RedditTopFeedLoader {
     private let url: URL
+    private let limit: String
     private let client: HTTPClient
     
-    public typealias Result = Error
+    public typealias Result = RedditTopFeedLoader.Result
     
     public enum Error: Swift.Error {
         case connectivity
         case invalidData
     }
     
-    public init(url: URL, client: HTTPClient) {
+    public init(url: URL, limit: String, client: HTTPClient) {
         self.url = url
         self.client =  client
+        self.limit = limit
     }
     
-    public func load(page: String, limit: String, completion: @escaping (Result) -> Void) {
+    public func loadFeed(page: String, completion: @escaping (Result) -> Void) {
         client.load(url: make(url: url, with: page, limit: limit)) { result in
             switch result {
             case let .success((_, response)):
                 guard response.isOK else {
-                    completion(.invalidData)
+                    completion(.failure(Error.invalidData))
                     return
                 }
             default:
-                completion(.connectivity)
+                completion(.failure(Error.connectivity))
             }
         }
     }

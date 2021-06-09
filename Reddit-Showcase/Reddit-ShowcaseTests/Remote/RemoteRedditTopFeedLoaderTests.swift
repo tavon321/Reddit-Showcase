@@ -20,9 +20,9 @@ class RemoteRedditTopFeedLoaderTests: XCTestCase {
         let expectedLimit = anyLimit
         let baseUrl = anyURL
         
-        let (sut, client) = makeSUT(url: baseUrl)
+        let (sut, client) = makeSUT(url: baseUrl, limit: expectedLimit)
         
-        sut.load(page: expectedPage, limit: expectedLimit) { _ in }
+        sut.loadFeed(page: expectedPage) { _ in }
         
         let expectedUrl = url(baseUrl, with: expectedPage, limit: expectedLimit)
         XCTAssertEqual(client.requestedUrls, [expectedUrl])
@@ -33,10 +33,10 @@ class RemoteRedditTopFeedLoaderTests: XCTestCase {
         let expectedLimit = anyLimit
         let baseUrl = anyURL
         
-        let (sut, client) = makeSUT(url: baseUrl)
+        let (sut, client) = makeSUT(url: baseUrl, limit: expectedLimit)
         
-        sut.load(page: expectedPage, limit: expectedLimit) { _ in }
-        sut.load(page: expectedPage, limit: expectedLimit) { _ in }
+        sut.loadFeed(page: expectedPage) { _ in }
+        sut.loadFeed(page: expectedPage) { _ in }
         
         let expectedUrl = url(baseUrl, with: expectedPage, limit: expectedLimit)
         XCTAssertEqual(client.requestedUrls, [expectedUrl, expectedUrl])
@@ -45,7 +45,7 @@ class RemoteRedditTopFeedLoaderTests: XCTestCase {
     func test_loadFeed_deliversConnectivityErrorOnClientsError() {
         let (sut, client) = makeSUT(url: anyURL)
 
-        expect(sut, toCompleteWith: .connectivity) {
+        expect(sut, toCompleteWith: failure(.connectivity)) {
             client.complete(with: anyNSError)
         }
     }
@@ -55,17 +55,34 @@ class RemoteRedditTopFeedLoaderTests: XCTestCase {
         let statusCodes = [199, 201, 400, 500]
         
         statusCodes.enumerated().forEach { (index, statusCode) in
-            expect(sut, toCompleteWith: .invalidData) {
+            expect(sut, toCompleteWith: failure(.invalidData)) {
                 client.complete(statusCode: statusCode, data: Data(), at: index)
             }
         }
     }
     
+//    func test_loadFeed_deliversEmptyFeedOn200WithEmptyFeedData() {
+//        let (sut, client) = makeSUT(url: anyURL)
+//
+//        expect(sut, toCompleteWith: .success([])) {
+//            client.complete(statusCode: 200, data: makeFeedJson)
+//        }
+//    }
+//
     // MARK: - Helpers
     private var anyURL: URL{ URL(string: "https://any-url.com")! }
     private var anyPage: String { "any-page" }
     private var anyLimit: String { "50" }
     private var anyNSError: NSError { NSError(domain: "any error", code: 0) }
+    
+    private func makeFeedJson(_ feed: [Any]) -> Data {
+        let json = ["data": ["children": feed]]
+       return try! JSONSerialization.data(withJSONObject: json)
+    }
+    
+    private func failure(_ error: RemoteRedditTopFeedLoader.Error) -> RemoteRedditTopFeedLoader.Result {
+        return .failure(error)
+    }
     
     private func url(_ url: URL, with page: String, limit: String) -> URL {
         let queryItems = [URLQueryItem(name: "limit", value: limit), URLQueryItem(name: "after", value: page)]
@@ -81,8 +98,15 @@ class RemoteRedditTopFeedLoaderTests: XCTestCase {
                         line: UInt = #line,
                         when action: () -> Void) {
         let exp = expectation(description: "wait for result")
-        sut.load(page: anyPage, limit: anyLimit) { receivedResult in
-            XCTAssertEqual(receivedResult, expectedResult, file: file, line: line)
+        sut.loadFeed(page: anyPage) { receivedResult in
+            switch (receivedResult, expectedResult) {
+            case let (.failure(receivedError as RemoteRedditTopFeedLoader.Error),
+                      .failure(expectedError as RemoteRedditTopFeedLoader.Error)):
+                XCTAssertEqual(receivedError, expectedError, file: file, line: line)
+            default:
+                XCTFail("Expected \(expectedResult), got \(receivedResult) instead", file: file, line: line)
+            }
+            
             exp.fulfill()
         }
         
@@ -91,11 +115,12 @@ class RemoteRedditTopFeedLoaderTests: XCTestCase {
     }
     
     private func makeSUT(url: URL = URL(string: "https://any-url.com")!,
+                         limit: String = "1",
                          file: StaticString = #file,
                          line: UInt = #line)
     -> (sut: RemoteRedditTopFeedLoader, client: HTTPClientSpy) {
         let client = HTTPClientSpy()
-        let sut = RemoteRedditTopFeedLoader(url: url, client: client)
+        let sut = RemoteRedditTopFeedLoader(url: url, limit: limit, client: client)
         
         trackForMemoryLeaks(client, file: file, line: line)
         trackForMemoryLeaks(sut, file: file, line: line)
