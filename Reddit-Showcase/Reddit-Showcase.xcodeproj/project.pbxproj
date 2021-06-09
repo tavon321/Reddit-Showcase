@@ -80,6 +80,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		716565412670E88100D23349 /* Remote */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Remote;
+			sourceTree = "<group>";
+		};
 		71DCFA052670452A009E5234 = {
 			isa = PBXGroup;
 			children = (
@@ -115,6 +122,7 @@
 		71DCFA272670452B009E5234 /* Reddit-ShowcaseTests */ = {
 			isa = PBXGroup;
 			children = (
+				716565412670E88100D23349 /* Remote */,
 				71DCFA282670452B009E5234 /* Reddit_ShowcaseTests.swift */,
 				71DCFA2A2670452B009E5234 /* Info.plist */,
 			);
