@@ -10,5 +10,5 @@ import Foundation
 public protocol RedditTopFeedLoader {
     typealias Result = Swift.Result<[RedditFeedList], Error>
     
-    func loadFeed(page: String, limit: Int)
+    func loadFeed(page: String, limit: Int, completion: @escaping (Result) -> Void)
 }
