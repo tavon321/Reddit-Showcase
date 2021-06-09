@@ -8,20 +8,30 @@
 import XCTest
 
 protocol HTTPClient {
-    func load(url: URL)
+    typealias Result = Swift.Result<(Data, HTTPURLResponse), Error>
+    
+    func load(url: URL, completion: @escaping (Result) -> Void)
 }
 
 class RemoteRedditTopFeedLoader {
     private let url: URL
     private let client: HTTPClient
     
+    public typealias Result = Error
+    
+    enum Error: Swift.Error {
+        case connectivity
+    }
+    
     init(url: URL, client: HTTPClient) {
         self.url = url
         self.client =  client
     }
     
-    func load(page: String, limit: String) {
-        client.load(url: make(url: url, with: page, limit: limit))
+    func load(page: String, limit: String, completion: @escaping (Result) -> Void) {
+        client.load(url: make(url: url, with: page, limit: limit)) { _ in
+            completion(.connectivity)
+        }
     }
     
     private func make(url: URL, with page: String, limit: String) -> URL {
@@ -47,7 +57,8 @@ class RemoteRedditTopFeedLoaderTests: XCTestCase {
         
         let (sut, client) = makeSUT(url: baseUrl)
         
-        sut.load(page: expectedPage, limit: expectedLimit)
+        sut.load(page: expectedPage, limit: expectedLimit) { _ in }
+        
         let expectedUrl = url(baseUrl, with: expectedPage, limit: expectedLimit)
         XCTAssertEqual(client.requestedUrls, [expectedUrl])
     }
@@ -59,17 +70,31 @@ class RemoteRedditTopFeedLoaderTests: XCTestCase {
         
         let (sut, client) = makeSUT(url: baseUrl)
         
-        sut.load(page: expectedPage, limit: expectedLimit)
-        sut.load(page: expectedPage, limit: expectedLimit)
+        sut.load(page: expectedPage, limit: expectedLimit) { _ in }
+        sut.load(page: expectedPage, limit: expectedLimit) { _ in }
         
         let expectedUrl = url(baseUrl, with: expectedPage, limit: expectedLimit)
         XCTAssertEqual(client.requestedUrls, [expectedUrl, expectedUrl])
+    }
+    
+    func test_loadFeed_deliversConnectivityErrorOnClientsError() {
+        let (sut, client) = makeSUT(url: anyURL)
+        
+        let exp = expectation(description: "wait for result")
+        sut.load(page: anyPage, limit: anyLimit) { error in
+            XCTAssertEqual(error, .connectivity)
+            exp.fulfill()
+        }
+        
+        client.complete(with: anyNSError)
+        wait(for: [exp], timeout: 0.1)
     }
     
     // MARK: - Helpers
     private var anyURL: URL{ URL(string: "https://any-url.com")! }
     private var anyPage: String { "any-page" }
     private var anyLimit: String { "50" }
+    private var anyNSError: NSError { NSError(domain: "any error", code: 0) }
     
     func url(_ url: URL, with page: String, limit: String) -> URL {
         let queryItems = [URLQueryItem(name: "limit", value: limit), URLQueryItem(name: "after", value: page)]
@@ -94,9 +119,15 @@ class RemoteRedditTopFeedLoaderTests: XCTestCase {
     
     private class HTTPClientSpy: HTTPClient {
         private(set) var requestedUrls = [URL]()
+        private(set) var completions = [(HTTPClient.Result) -> Void]()
         
-        func load(url: URL) {
+        func load(url: URL, completion: @escaping (HTTPClient.Result) -> Void) {
             requestedUrls.append(url)
+            completions.append(completion)
+        }
+        
+        func complete(with error: Error, at index: Int = 0) {
+            completions[index](.failure(error))
         }
     }
 }
