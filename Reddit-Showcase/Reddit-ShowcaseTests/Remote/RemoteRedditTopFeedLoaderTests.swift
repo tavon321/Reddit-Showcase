@@ -27,16 +27,14 @@ class RemoteRedditTopFeedLoader {
 
 class RemoteRedditTopFeedLoaderTests: XCTestCase {
     func test_init_doesNotMessageClient() {
-        let client = HTTPClientSpy()
-        _ = RemoteRedditTopFeedLoader(url: anyURL, client: client)
+        let (sut, client) = makeSUT()
         
         XCTAssertTrue(client.callCount == 0)
     }
     
     func test_loadFeed_messageClientWithURL() {
         let expectedUrl = anyURL
-        let client = HTTPClientSpy()
-        let sut = RemoteRedditTopFeedLoader(url: expectedUrl, client: client)
+        let (sut, client) = makeSUT(url: expectedUrl)
         
         sut.load()
         
@@ -45,6 +43,14 @@ class RemoteRedditTopFeedLoaderTests: XCTestCase {
     
     // MARK: - Helpers
     private let anyURL = URL(string: "https://any-url.com")!
+    
+    private func makeSUT(url: URL = URL(string: "https://any-url.com")!)
+    -> (sut: RemoteRedditTopFeedLoader, client: HTTPClientSpy) {
+        let client = HTTPClientSpy()
+        let sut = RemoteRedditTopFeedLoader(url: url, client: client)
+        
+        return (sut: sut, client: client)
+    }
     
     private class HTTPClientSpy: HTTPClient {
         private(set) var requestedUrls = [URL]()
