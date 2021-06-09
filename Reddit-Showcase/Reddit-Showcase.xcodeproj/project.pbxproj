@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		716565432670E8D900D23349 /* RemoteRedditTopFeedLoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 716565422670E8D900D23349 /* RemoteRedditTopFeedLoaderTests.swift */; };
 		71DCFA122670452A009E5234 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71DCFA112670452A009E5234 /* AppDelegate.swift */; };
 		71DCFA142670452A009E5234 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71DCFA132670452A009E5234 /* SceneDelegate.swift */; };
 		71DCFA162670452A009E5234 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71DCFA152670452A009E5234 /* ViewController.swift */; };
@@ -37,6 +38,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		716565422670E8D900D23349 /* RemoteRedditTopFeedLoaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteRedditTopFeedLoaderTests.swift; sourceTree = "<group>"; };
 		71DCFA0E2670452A009E5234 /* Reddit-Showcase.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Reddit-Showcase.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		71DCFA112670452A009E5234 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		71DCFA132670452A009E5234 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -83,6 +85,7 @@
 		716565412670E88100D23349 /* Remote */ = {
 			isa = PBXGroup;
 			children = (
+				716565422670E8D900D23349 /* RemoteRedditTopFeedLoaderTests.swift */,
 			);
 			path = Remote;
 			sourceTree = "<group>";
@@ -324,6 +327,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				716565432670E8D900D23349 /* RemoteRedditTopFeedLoaderTests.swift in Sources */,
 				71DCFA292670452B009E5234 /* Reddit_ShowcaseTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
