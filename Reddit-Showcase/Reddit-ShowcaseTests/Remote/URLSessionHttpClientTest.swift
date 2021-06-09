@@ -15,10 +15,15 @@ public class URLSessionHTTPClient: HTTPClient {
         self.session = session
     }
     
+    struct UnexpectedValue: Error { }
+    
     public func load(url: URL, completion: @escaping (HTTPClient.Result) -> Void) {
-        session.dataTask(with: url) { _, _, error in
+        session.dataTask(with: url) { data, response, error in
             if let error = error {
                 completion(.failure(error))
+            } else if data != nil , response is HTTPURLResponse {
+            } else {
+                completion(.failure(UnexpectedValue()))
             }
         }.resume()
     }
@@ -56,7 +61,30 @@ class URLSessionHttpClientTest: XCTestCase {
         XCTAssertEqual(requestedError.domain, (receivedError as NSError?)?.domain)
     }
     
+    func test_getFromUrl_failsOnAllInvalidCasesValues() {
+        XCTAssertNotNil(resultErrorFor(data: nil, response: nil, error: nil))
+        XCTAssertNotNil(resultErrorFor(data: nil, response: nonHTTTPURLResponse, error: nil))
+        XCTAssertNotNil(resultErrorFor(data: nil, response: anyHTTTPURLResponse, error: anyNSError))
+        XCTAssertNotNil(resultErrorFor(data: anyData, response: nil, error: nil))
+        XCTAssertNotNil(resultErrorFor(data: anyData, response: nil, error: anyNSError))
+        XCTAssertNotNil(resultErrorFor(data: nil, response: nonHTTTPURLResponse, error: anyNSError))
+        XCTAssertNotNil(resultErrorFor(data: nil, response: anyHTTTPURLResponse, error: anyNSError))
+        XCTAssertNotNil(resultErrorFor(data: anyData, response: nonHTTTPURLResponse, error: anyNSError))
+        XCTAssertNotNil(resultErrorFor(data: anyData, response: anyHTTTPURLResponse, error: anyNSError))
+        XCTAssertNotNil(resultErrorFor(data: anyData, response: nonHTTTPURLResponse, error: nil))
+    }
+    
     // MARK: - Helpers
+    private var nonHTTTPURLResponse: URLResponse {
+        return URLResponse(url: anyURL, mimeType: nil, expectedContentLength: 0, textEncodingName: nil)
+    }
+    
+    private var anyHTTTPURLResponse: HTTPURLResponse {
+        return HTTPURLResponse(url: anyURL, mimeType: nil, expectedContentLength: 0, textEncodingName: nil)
+    }
+    
+    private var anyData: Data { Data("any data".utf8) }
+    
     private func resultErrorFor(data: Data?, response: URLResponse?, error: Error?, file: StaticString = #file, line: UInt = #line) -> Error? {
         let result = resultFor(data: data, response: response, error: error, file: file, line: line)
         var capturedError: Error?
