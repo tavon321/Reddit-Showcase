@@ -27,6 +27,7 @@
 		71DCFA49267047E0009E5234 /* RedditTopFeedLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71DCFA48267047E0009E5234 /* RedditTopFeedLoader.swift */; };
 		71F3AF9B267184AF007FCE79 /* URLSessionHttpClientTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F3AF9A267184AF007FCE79 /* URLSessionHttpClientTest.swift */; };
 		71F3AF9D2671855A007FCE79 /* ShareTestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F3AF9C2671855A007FCE79 /* ShareTestHelpers.swift */; };
+		71F3AF9F267188AD007FCE79 /* URLSessionHTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F3AF9E267188AD007FCE79 /* URLSessionHTTPClient.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +65,7 @@
 		71DCFA48267047E0009E5234 /* RedditTopFeedLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedditTopFeedLoader.swift; sourceTree = "<group>"; };
 		71F3AF9A267184AF007FCE79 /* URLSessionHttpClientTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionHttpClientTest.swift; sourceTree = "<group>"; };
 		71F3AF9C2671855A007FCE79 /* ShareTestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareTestHelpers.swift; sourceTree = "<group>"; };
+		71F3AF9E267188AD007FCE79 /* URLSessionHTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionHTTPClient.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +121,7 @@
 			isa = PBXGroup;
 			children = (
 				7165654D267105E100D23349 /* HTTPClient.swift */,
+				71F3AF9E267188AD007FCE79 /* URLSessionHTTPClient.swift */,
 			);
 			path = HTTPClient;
 			sourceTree = "<group>";
@@ -337,6 +340,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				71DCFA162670452A009E5234 /* ViewController.swift in Sources */,
+				71F3AF9F267188AD007FCE79 /* URLSessionHTTPClient.swift in Sources */,
 				71656551267105F500D23349 /* HTTPURLResponse+statusCodes.swift in Sources */,
 				716565592671189000D23349 /* RemoteRedditFeed.swift in Sources */,
 				71DCFA122670452A009E5234 /* AppDelegate.swift in Sources */,
