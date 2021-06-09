@@ -104,13 +104,10 @@ class RemoteRedditTopFeedLoaderTests: XCTestCase {
     }
 
     // MARK: - Helpers
-    private var anyURL: URL{ URL(string: "https://any-url.com")! }
+    private var anyNSError: NSError { NSError(domain: "any error", code: 0) }
     private var anyPage: String { "any-page" }
     private var anyLimit: String { "50" }
-    private var anyNSError: NSError { NSError(domain: "any error", code: 0) }
-    
-    
-    
+   
     private func makeFeed(_ feed: [RedditFeed], pagination: String? = nil) -> RedditFeedList {
         RedditFeedList(pagination: pagination, feedItems: feed)
     }

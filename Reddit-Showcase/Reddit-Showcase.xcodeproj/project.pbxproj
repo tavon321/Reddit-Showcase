@@ -26,6 +26,7 @@
 		71DCFA4726704610009E5234 /* RedditFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71DCFA4626704610009E5234 /* RedditFeed.swift */; };
 		71DCFA49267047E0009E5234 /* RedditTopFeedLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71DCFA48267047E0009E5234 /* RedditTopFeedLoader.swift */; };
 		71F3AF9B267184AF007FCE79 /* URLSessionHttpClientTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F3AF9A267184AF007FCE79 /* URLSessionHttpClientTest.swift */; };
+		71F3AF9D2671855A007FCE79 /* ShareTestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F3AF9C2671855A007FCE79 /* ShareTestHelpers.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,6 +63,7 @@
 		71DCFA4626704610009E5234 /* RedditFeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedditFeed.swift; sourceTree = "<group>"; };
 		71DCFA48267047E0009E5234 /* RedditTopFeedLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedditTopFeedLoader.swift; sourceTree = "<group>"; };
 		71F3AF9A267184AF007FCE79 /* URLSessionHttpClientTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionHttpClientTest.swift; sourceTree = "<group>"; };
+		71F3AF9C2671855A007FCE79 /* ShareTestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareTestHelpers.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,6 +97,7 @@
 		716565442670ED1F00D23349 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				71F3AF9C2671855A007FCE79 /* ShareTestHelpers.swift */,
 				716565452670ED3500D23349 /* XCTestsCase+TrackForMemoryLeaks.swift */,
 				7165655526710D2300D23349 /* loadJson.swift */,
 			);
@@ -350,6 +353,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				716565432670E8D900D23349 /* RemoteRedditTopFeedLoaderTests.swift in Sources */,
+				71F3AF9D2671855A007FCE79 /* ShareTestHelpers.swift in Sources */,
 				71DCFA292670452B009E5234 /* Reddit_ShowcaseTests.swift in Sources */,
 				71F3AF9B267184AF007FCE79 /* URLSessionHttpClientTest.swift in Sources */,
 				716565462670ED3500D23349 /* XCTestsCase+TrackForMemoryLeaks.swift in Sources */,

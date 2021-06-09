@@ -6,6 +6,19 @@
 //
 
 import XCTest
+import Reddit_Showcase
+
+public class URLSessionHTTPClient: HTTPClient {
+    private let session: URLSession
+    
+    public init(session: URLSession = .shared) {
+        self.session = session
+    }
+    
+    public func load(url: URL, completion: @escaping (HTTPClient.Result) -> Void) {
+        session.dataTask(with: url) { _, _, _ in }.resume()
+    }
+}
 
 class URLSessionHttpClientTest: XCTestCase {
     override func setUpWithError() throws {
@@ -16,8 +29,29 @@ class URLSessionHttpClientTest: XCTestCase {
         URLProtocolStub.stopInterceptionRequest()
     }
     
+    func test_loadFromURL_performRequestWithURL() {
+        let url = anyURL
+        let exp = expectation(description: "Wait for request")
+        
+        URLProtocolStub.observeRequest { request in
+            XCTAssertEqual(request.url, url)
+            XCTAssertEqual(request.httpMethod, "GET")
+            exp.fulfill()
+        }
+        
+        makeSUT().load(url: url) { _ in }
+        
+        wait(for: [exp], timeout: 1.0)
+    }
     
     // MARK: - Helpers
+    private func makeSUT(file: StaticString = #file, line: UInt = #line) -> URLSessionHTTPClient {
+        let sut = URLSessionHTTPClient()
+        trackForMemoryLeaks(sut, file: file, line: line)
+        
+        return sut
+    }
+    
     private class URLProtocolStub: URLProtocol {
         private static var stub: Stub?
         private static var requestObserver: ((URLRequest) -> Void)?
