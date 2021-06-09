@@ -6,59 +6,7 @@
 //
 
 import XCTest
-
-extension HTTPURLResponse {
-    private static var OK_200: Int { return 200 }
-
-    var isOK: Bool {
-        return statusCode == HTTPURLResponse.OK_200
-    }
-}
-
-protocol HTTPClient {
-    typealias Result = Swift.Result<(Data, HTTPURLResponse), Error>
-    
-    func load(url: URL, completion: @escaping (Result) -> Void)
-}
-
-class RemoteRedditTopFeedLoader {
-    private let url: URL
-    private let client: HTTPClient
-    
-    public typealias Result = Error
-    
-    enum Error: Swift.Error {
-        case connectivity
-        case invalidData
-    }
-    
-    init(url: URL, client: HTTPClient) {
-        self.url = url
-        self.client =  client
-    }
-    
-    func load(page: String, limit: String, completion: @escaping (Result) -> Void) {
-        client.load(url: make(url: url, with: page, limit: limit)) { result in
-            switch result {
-            case let .success((_, response)):
-                guard response.isOK else {
-                    completion(.invalidData)
-                    return
-                }
-            default:
-                completion(.connectivity)
-            }
-        }
-    }
-    
-    private func make(url: URL, with page: String, limit: String) -> URL {
-        let queryItems = [URLQueryItem(name: "limit", value: limit), URLQueryItem(name: "after", value: page)]
-        var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: true)
-        urlComponents?.queryItems = queryItems
-        
-        return urlComponents!.url!
-    }
-}
+import Reddit_Showcase
 
 class RemoteRedditTopFeedLoaderTests: XCTestCase {
     func test_init_doesNotMessageClient() {
