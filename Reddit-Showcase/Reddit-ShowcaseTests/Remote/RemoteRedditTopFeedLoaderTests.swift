@@ -44,10 +44,15 @@ class RemoteRedditTopFeedLoaderTests: XCTestCase {
     // MARK: - Helpers
     private let anyURL = URL(string: "https://any-url.com")!
     
-    private func makeSUT(url: URL = URL(string: "https://any-url.com")!)
+    private func makeSUT(url: URL = URL(string: "https://any-url.com")!,
+                         file: StaticString = #file,
+                         line: UInt = #line)
     -> (sut: RemoteRedditTopFeedLoader, client: HTTPClientSpy) {
         let client = HTTPClientSpy()
         let sut = RemoteRedditTopFeedLoader(url: url, client: client)
+        
+        trackForMemoryLeaks(client, file: file, line: line)
+        trackForMemoryLeaks(sut, file: file, line: line)
         
         return (sut: sut, client: client)
     }
