@@ -27,9 +27,9 @@ class RemoteRedditTopFeedLoader {
 
 class RemoteRedditTopFeedLoaderTests: XCTestCase {
     func test_init_doesNotMessageClient() {
-        let (sut, client) = makeSUT()
+        let (_, client) = makeSUT()
         
-        XCTAssertTrue(client.callCount == 0)
+        XCTAssertTrue(client.requestedUrls.isEmpty)
     }
     
     func test_loadFeed_messageClientWithURL() {
@@ -54,11 +54,9 @@ class RemoteRedditTopFeedLoaderTests: XCTestCase {
     
     private class HTTPClientSpy: HTTPClient {
         private(set) var requestedUrls = [URL]()
-        var callCount = 0
         
         func load(url: URL) {
             requestedUrls.append(url)
-            callCount += 1
         }
     }
 }
