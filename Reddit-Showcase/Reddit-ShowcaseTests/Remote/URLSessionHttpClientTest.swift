@@ -21,7 +21,8 @@ public class URLSessionHTTPClient: HTTPClient {
         session.dataTask(with: url) { data, response, error in
             if let error = error {
                 completion(.failure(error))
-            } else if data != nil , response is HTTPURLResponse {
+            } else if let data = data , let response = response as? HTTPURLResponse {
+                completion(.success((data, response)))
             } else {
                 completion(.failure(UnexpectedValue()))
             }
@@ -61,7 +62,7 @@ class URLSessionHttpClientTest: XCTestCase {
         XCTAssertEqual(requestedError.domain, (receivedError as NSError?)?.domain)
     }
     
-    func test_getFromUrl_failsOnAllInvalidCasesValues() {
+    func test_loadFromUrl_failsOnAllInvalidCasesValues() {
         XCTAssertNotNil(resultErrorFor(data: nil, response: nil, error: nil))
         XCTAssertNotNil(resultErrorFor(data: nil, response: nonHTTTPURLResponse, error: nil))
         XCTAssertNotNil(resultErrorFor(data: nil, response: anyHTTTPURLResponse, error: anyNSError))
@@ -74,6 +75,15 @@ class URLSessionHttpClientTest: XCTestCase {
         XCTAssertNotNil(resultErrorFor(data: anyData, response: nonHTTTPURLResponse, error: nil))
     }
     
+    func test_loadFromURL_succeedOnHTTPResponseWithData() {
+        let expectedData = anyData
+        let expectedHTTPResponse = anyHTTTPURLResponse
+        let result = resultSucceedFor(data: expectedData, response: expectedHTTPResponse)
+        
+        XCTAssertEqual(expectedData, result?.data)
+        XCTAssertEqual(expectedHTTPResponse.statusCode, result?.response.statusCode)
+    }
+    
     // MARK: - Helpers
     private var nonHTTTPURLResponse: URLResponse {
         return URLResponse(url: anyURL, mimeType: nil, expectedContentLength: 0, textEncodingName: nil)
@@ -84,6 +94,23 @@ class URLSessionHttpClientTest: XCTestCase {
     }
     
     private var anyData: Data { Data("any data".utf8) }
+    
+    private func resultSucceedFor(data: Data?,
+                                  response: URLResponse?,
+                                  file: StaticString = #file,
+                                  line: UInt = #line) -> (data: Data, response: HTTPURLResponse)? {
+        let result = resultFor(data: data, response: response, error: nil, file: file, line: line)
+        var capturedResponse: (data: Data, response: HTTPURLResponse)?
+        
+        switch result {
+        case let.success((data, response)):
+            capturedResponse = (data, response)
+        default:
+            XCTFail("Expected success, got \(result as Any) instead", file: file, line: line)
+        }
+        
+        return capturedResponse
+    }
     
     private func resultErrorFor(data: Data?, response: URLResponse?, error: Error?, file: StaticString = #file, line: UInt = #line) -> Error? {
         let result = resultFor(data: data, response: response, error: error, file: file, line: line)
