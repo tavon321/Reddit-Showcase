@@ -25,7 +25,7 @@ class RemoteRedditTopFeedLoader {
     }
     
     private func make(url: URL, with page: String, limit: String) -> URL {
-        let queryItems = [URLQueryItem(name: "page", value: page), URLQueryItem(name: "limit", value: limit)]
+        let queryItems = [URLQueryItem(name: "limit", value: limit), URLQueryItem(name: "after", value: page)]
         var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: true)
         urlComponents?.queryItems = queryItems
         
@@ -52,13 +52,27 @@ class RemoteRedditTopFeedLoaderTests: XCTestCase {
         XCTAssertEqual(client.requestedUrls, [expectedUrl])
     }
     
+    func test_loadFeedTwice_requestFromClientTwice() {
+        let expectedPage = anyPage
+        let expectedLimit = anyLimit
+        let baseUrl = anyURL
+        
+        let (sut, client) = makeSUT(url: baseUrl)
+        
+        sut.load(page: expectedPage, limit: expectedLimit)
+        sut.load(page: expectedPage, limit: expectedLimit)
+        
+        let expectedUrl = url(baseUrl, with: expectedPage, limit: expectedLimit)
+        XCTAssertEqual(client.requestedUrls, [expectedUrl, expectedUrl])
+    }
+    
     // MARK: - Helpers
     private var anyURL: URL{ URL(string: "https://any-url.com")! }
     private var anyPage: String { "any-page" }
     private var anyLimit: String { "50" }
     
     func url(_ url: URL, with page: String, limit: String) -> URL {
-        let queryItems = [URLQueryItem(name: "page", value: page), URLQueryItem(name: "limit", value: limit)]
+        let queryItems = [URLQueryItem(name: "limit", value: limit), URLQueryItem(name: "after", value: page)]
         var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: true)
         urlComponents?.queryItems = queryItems
         
