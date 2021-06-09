@@ -20,8 +20,16 @@ class RemoteRedditTopFeedLoader {
         self.client =  client
     }
     
-    func load() {
-        client.load(url: url)
+    func load(page: String, limit: String) {
+        client.load(url: make(url: url, with: page, limit: limit))
+    }
+    
+    private func make(url: URL, with page: String, limit: String) -> URL {
+        let queryItems = [URLQueryItem(name: "page", value: page), URLQueryItem(name: "limit", value: limit)]
+        var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: true)
+        urlComponents?.queryItems = queryItems
+        
+        return urlComponents!.url!
     }
 }
 
@@ -32,17 +40,30 @@ class RemoteRedditTopFeedLoaderTests: XCTestCase {
         XCTAssertTrue(client.requestedUrls.isEmpty)
     }
     
-    func test_loadFeed_messageClientWithURL() {
-        let expectedUrl = anyURL
-        let (sut, client) = makeSUT(url: expectedUrl)
+    func test_loadFeed_messageClientWithURLAndParameters() {
+        let expectedPage = anyPage
+        let expectedLimit = anyLimit
+        let baseUrl = anyURL
         
-        sut.load()
+        let (sut, client) = makeSUT(url: baseUrl)
         
+        sut.load(page: expectedPage, limit: expectedLimit)
+        let expectedUrl = url(baseUrl, with: expectedPage, limit: expectedLimit)
         XCTAssertEqual(client.requestedUrls, [expectedUrl])
     }
     
     // MARK: - Helpers
-    private let anyURL = URL(string: "https://any-url.com")!
+    private var anyURL: URL{ URL(string: "https://any-url.com")! }
+    private var anyPage: String { "any-page" }
+    private var anyLimit: String { "50" }
+    
+    func url(_ url: URL, with page: String, limit: String) -> URL {
+        let queryItems = [URLQueryItem(name: "page", value: page), URLQueryItem(name: "limit", value: limit)]
+        var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: true)
+        urlComponents?.queryItems = queryItems
+        
+        return urlComponents!.url!
+    }
     
     private func makeSUT(url: URL = URL(string: "https://any-url.com")!,
                          file: StaticString = #file,
