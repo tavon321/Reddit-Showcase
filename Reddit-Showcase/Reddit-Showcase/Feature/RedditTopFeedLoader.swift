@@ -8,7 +8,7 @@
 import Foundation
 
 public protocol RedditTopFeedLoader {
-    typealias Result = Swift.Result<[RedditFeedList], Error>
+    typealias Result = Swift.Result<RedditFeedList, Error>
     
     func loadFeed(page: String, completion: @escaping (Result) -> Void)
 }

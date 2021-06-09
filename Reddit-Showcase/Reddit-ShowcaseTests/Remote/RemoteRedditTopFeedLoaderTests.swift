@@ -61,23 +61,26 @@ class RemoteRedditTopFeedLoaderTests: XCTestCase {
         }
     }
     
-//    func test_loadFeed_deliversEmptyFeedOn200WithEmptyFeedData() {
-//        let (sut, client) = makeSUT(url: anyURL)
-//
-//        expect(sut, toCompleteWith: .success([])) {
-//            client.complete(statusCode: 200, data: makeFeedJson)
-//        }
-//    }
-//
+    func test_loadFeed_deliversEmptyFeedOn200WithEmptyFeedData() {
+        let (sut, client) = makeSUT(url: anyURL)
+        let emptyFeedItem = makeFeed([])
+        
+        expect(sut, toCompleteWith: .success(emptyFeedItem)) {
+            let emptyJsonData = loadJson(named: "EmptyFeed")!
+            client.complete(statusCode: 200, data: emptyJsonData)
+        }
+    }
+
     // MARK: - Helpers
     private var anyURL: URL{ URL(string: "https://any-url.com")! }
     private var anyPage: String { "any-page" }
     private var anyLimit: String { "50" }
     private var anyNSError: NSError { NSError(domain: "any error", code: 0) }
     
-    private func makeFeedJson(_ feed: [Any]) -> Data {
-        let json = ["data": ["children": feed]]
-       return try! JSONSerialization.data(withJSONObject: json)
+    
+    
+    private func makeFeed(_ feed: [RedditFeed], pagination: String? = nil) -> RedditFeedList {
+        RedditFeedList(pagination: pagination, feedItems: feed)
     }
     
     private func failure(_ error: RemoteRedditTopFeedLoader.Error) -> RemoteRedditTopFeedLoader.Result {
@@ -100,6 +103,8 @@ class RemoteRedditTopFeedLoaderTests: XCTestCase {
         let exp = expectation(description: "wait for result")
         sut.loadFeed(page: anyPage) { receivedResult in
             switch (receivedResult, expectedResult) {
+            case let (.success(receivedFeedList), .success(expectedFeedlist)):
+                XCTAssertEqual(receivedFeedList, expectedFeedlist, file: file, line: line)
             case let (.failure(receivedError as RemoteRedditTopFeedLoader.Error),
                       .failure(expectedError as RemoteRedditTopFeedLoader.Error)):
                 XCTAssertEqual(receivedError, expectedError, file: file, line: line)

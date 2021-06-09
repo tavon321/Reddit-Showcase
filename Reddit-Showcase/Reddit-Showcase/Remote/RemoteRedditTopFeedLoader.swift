@@ -28,14 +28,20 @@ public class RemoteRedditTopFeedLoader: RedditTopFeedLoader {
     public func loadFeed(page: String, completion: @escaping (Result) -> Void) {
         client.load(url: make(url: url, with: page, limit: limit)) { result in
             switch result {
-            case let .success((_, response)):
-                guard response.isOK else {
-                    completion(.failure(Error.invalidData))
-                    return
-                }
-            default:
+            case let .success((data, response)):
+                completion(RemoteRedditTopFeedLoader.map(data: data, response: response))
+            case .failure:
                 completion(.failure(Error.connectivity))
             }
+        }
+    }
+    
+    private static func map(data: Data, response: HTTPURLResponse) -> Result {
+        do {
+            let remote = try RemoteRedditTopFeedMapper.map(data: data, response: response)
+            return .success(remote)
+        } catch {
+            return .failure(error)
         }
     }
     
@@ -45,5 +51,19 @@ public class RemoteRedditTopFeedLoader: RedditTopFeedLoader {
         urlComponents?.queryItems = queryItems
         
         return urlComponents!.url!
+    }
+}
+
+internal final class RemoteRedditTopFeedMapper {
+    struct Root: Decodable {
+        let data: RedditFeedList
+    }
+
+    static func map(data: Data, response: HTTPURLResponse) throws -> RedditFeedList {
+        guard response.isOK, let root = try? JSONDecoder().decode(Root.self, from: data) else {
+            throw RemoteRedditTopFeedLoader.Error.invalidData
+        }
+        
+        return root.data
     }
 }
