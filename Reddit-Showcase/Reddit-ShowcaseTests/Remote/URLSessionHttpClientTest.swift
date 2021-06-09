@@ -16,7 +16,11 @@ public class URLSessionHTTPClient: HTTPClient {
     }
     
     public func load(url: URL, completion: @escaping (HTTPClient.Result) -> Void) {
-        session.dataTask(with: url) { _, _, _ in }.resume()
+        session.dataTask(with: url) { _, _, error in
+            if let error = error {
+                completion(.failure(error))
+            }
+        }.resume()
     }
 }
 
@@ -44,7 +48,44 @@ class URLSessionHttpClientTest: XCTestCase {
         wait(for: [exp], timeout: 1.0)
     }
     
+    func test_loadFromUrl_failsOnRequestError() {
+        let requestedError = anyNSError
+        let receivedError = resultErrorFor(data: nil, response: nil, error: requestedError)
+        
+        XCTAssertEqual(requestedError.code, (receivedError as NSError?)?.code)
+        XCTAssertEqual(requestedError.domain, (receivedError as NSError?)?.domain)
+    }
+    
     // MARK: - Helpers
+    private func resultErrorFor(data: Data?, response: URLResponse?, error: Error?, file: StaticString = #file, line: UInt = #line) -> Error? {
+        let result = resultFor(data: data, response: response, error: error, file: file, line: line)
+        var capturedError: Error?
+        
+        switch result {
+        case .failure(let receivedError):
+            capturedError = receivedError
+        default:
+            XCTFail("Expected failure, got \(result as Any) instead", file: file, line: line)
+        }
+        
+        return capturedError
+    }
+    
+    private func resultFor(data: Data?, response: URLResponse?, error: Error?, file: StaticString = #file, line: UInt = #line) -> HTTPClient.Result? {
+        URLProtocolStub.stub(data: data, response: response, error: error)
+        let exp = expectation(description: "Wait for result")
+        
+        var capturedResult: HTTPClient.Result?
+        makeSUT().load(url: anyURL) { result in
+            capturedResult = result
+            exp.fulfill()
+        }
+
+        wait(for: [exp], timeout: 1)
+        
+        return capturedResult
+    }
+    
     private func makeSUT(file: StaticString = #file, line: UInt = #line) -> URLSessionHTTPClient {
         let sut = URLSessionHTTPClient()
         trackForMemoryLeaks(sut, file: file, line: line)

@@ -104,7 +104,6 @@ class RemoteRedditTopFeedLoaderTests: XCTestCase {
     }
 
     // MARK: - Helpers
-    private var anyNSError: NSError { NSError(domain: "any error", code: 0) }
     private var anyPage: String { "any-page" }
     private var anyLimit: String { "50" }
    
