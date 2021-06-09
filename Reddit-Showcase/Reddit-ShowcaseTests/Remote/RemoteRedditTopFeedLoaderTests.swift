@@ -71,6 +71,21 @@ class RemoteRedditTopFeedLoaderTests: XCTestCase {
         }
     }
     
+    func test_loadFeed_doesNotRequestAfterSUTHAsBeenDeallocated() {
+        let client = HTTPClientSpy()
+        var sut: RemoteRedditTopFeedLoader? = RemoteRedditTopFeedLoader(url: anyURL, limit: "0", client: client)
+        
+        var capturedResult: RemoteRedditTopFeedLoader.Result?
+        sut?.loadFeed(page: "", completion: { result in
+            capturedResult = result
+        })
+        
+        sut = nil
+        client.complete(with: anyNSError)
+        
+        XCTAssertNil(capturedResult)
+    }
+    
     func test_loadFeed_deliversFeedOn200WithFeedData() {
         let (sut, client) = makeSUT(url: anyURL)
         let feedItem = makeFeed([RedditFeed(title: "Wooo sled racing",
