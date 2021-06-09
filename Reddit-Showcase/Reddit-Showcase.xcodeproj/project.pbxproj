@@ -15,20 +15,12 @@
 		71DCFA1B2670452A009E5234 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 71DCFA1A2670452A009E5234 /* Assets.xcassets */; };
 		71DCFA1E2670452A009E5234 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 71DCFA1C2670452A009E5234 /* LaunchScreen.storyboard */; };
 		71DCFA292670452B009E5234 /* Reddit_ShowcaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71DCFA282670452B009E5234 /* Reddit_ShowcaseTests.swift */; };
-		71DCFA342670452B009E5234 /* Reddit_ShowcaseUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71DCFA332670452B009E5234 /* Reddit_ShowcaseUITests.swift */; };
 		71DCFA4726704610009E5234 /* RedditFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71DCFA4626704610009E5234 /* RedditFeed.swift */; };
 		71DCFA49267047E0009E5234 /* RedditTopFeedLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71DCFA48267047E0009E5234 /* RedditTopFeedLoader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
 		71DCFA252670452B009E5234 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 71DCFA062670452A009E5234 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 71DCFA0D2670452A009E5234;
-			remoteInfo = "Reddit-Showcase";
-		};
-		71DCFA302670452B009E5234 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 71DCFA062670452A009E5234 /* Project object */;
 			proxyType = 1;
@@ -50,9 +42,6 @@
 		71DCFA242670452B009E5234 /* Reddit-ShowcaseTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Reddit-ShowcaseTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		71DCFA282670452B009E5234 /* Reddit_ShowcaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reddit_ShowcaseTests.swift; sourceTree = "<group>"; };
 		71DCFA2A2670452B009E5234 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		71DCFA2F2670452B009E5234 /* Reddit-ShowcaseUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Reddit-ShowcaseUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		71DCFA332670452B009E5234 /* Reddit_ShowcaseUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reddit_ShowcaseUITests.swift; sourceTree = "<group>"; };
-		71DCFA352670452B009E5234 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		71DCFA4626704610009E5234 /* RedditFeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedditFeed.swift; sourceTree = "<group>"; };
 		71DCFA48267047E0009E5234 /* RedditTopFeedLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedditTopFeedLoader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -66,13 +55,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		71DCFA212670452B009E5234 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		71DCFA2C2670452B009E5234 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -95,7 +77,6 @@
 			children = (
 				71DCFA102670452A009E5234 /* Reddit-Showcase */,
 				71DCFA272670452B009E5234 /* Reddit-ShowcaseTests */,
-				71DCFA322670452B009E5234 /* Reddit-ShowcaseUITests */,
 				71DCFA0F2670452A009E5234 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -105,7 +86,6 @@
 			children = (
 				71DCFA0E2670452A009E5234 /* Reddit-Showcase.app */,
 				71DCFA242670452B009E5234 /* Reddit-ShowcaseTests.xctest */,
-				71DCFA2F2670452B009E5234 /* Reddit-ShowcaseUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -130,15 +110,6 @@
 				71DCFA2A2670452B009E5234 /* Info.plist */,
 			);
 			path = "Reddit-ShowcaseTests";
-			sourceTree = "<group>";
-		};
-		71DCFA322670452B009E5234 /* Reddit-ShowcaseUITests */ = {
-			isa = PBXGroup;
-			children = (
-				71DCFA332670452B009E5234 /* Reddit_ShowcaseUITests.swift */,
-				71DCFA352670452B009E5234 /* Info.plist */,
-			);
-			path = "Reddit-ShowcaseUITests";
 			sourceTree = "<group>";
 		};
 		71DCFA41267045A6009E5234 /* View */ = {
@@ -223,24 +194,6 @@
 			productReference = 71DCFA242670452B009E5234 /* Reddit-ShowcaseTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		71DCFA2E2670452B009E5234 /* Reddit-ShowcaseUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 71DCFA3E2670452B009E5234 /* Build configuration list for PBXNativeTarget "Reddit-ShowcaseUITests" */;
-			buildPhases = (
-				71DCFA2B2670452B009E5234 /* Sources */,
-				71DCFA2C2670452B009E5234 /* Frameworks */,
-				71DCFA2D2670452B009E5234 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				71DCFA312670452B009E5234 /* PBXTargetDependency */,
-			);
-			name = "Reddit-ShowcaseUITests";
-			productName = "Reddit-ShowcaseUITests";
-			productReference = 71DCFA2F2670452B009E5234 /* Reddit-ShowcaseUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -254,10 +207,6 @@
 						CreatedOnToolsVersion = 12.5;
 					};
 					71DCFA232670452B009E5234 = {
-						CreatedOnToolsVersion = 12.5;
-						TestTargetID = 71DCFA0D2670452A009E5234;
-					};
-					71DCFA2E2670452B009E5234 = {
 						CreatedOnToolsVersion = 12.5;
 						TestTargetID = 71DCFA0D2670452A009E5234;
 					};
@@ -278,7 +227,6 @@
 			targets = (
 				71DCFA0D2670452A009E5234 /* Reddit-Showcase */,
 				71DCFA232670452B009E5234 /* Reddit-ShowcaseTests */,
-				71DCFA2E2670452B009E5234 /* Reddit-ShowcaseUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -295,13 +243,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		71DCFA222670452B009E5234 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		71DCFA2D2670452B009E5234 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -332,14 +273,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		71DCFA2B2670452B009E5234 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				71DCFA342670452B009E5234 /* Reddit_ShowcaseUITests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -347,11 +280,6 @@
 			isa = PBXTargetDependency;
 			target = 71DCFA0D2670452A009E5234 /* Reddit-Showcase */;
 			targetProxy = 71DCFA252670452B009E5234 /* PBXContainerItemProxy */;
-		};
-		71DCFA312670452B009E5234 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 71DCFA0D2670452A009E5234 /* Reddit-Showcase */;
-			targetProxy = 71DCFA302670452B009E5234 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -573,46 +501,6 @@
 			};
 			name = Release;
 		};
-		71DCFA3F2670452B009E5234 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = J642JTAX63;
-				INFOPLIST_FILE = "Reddit-ShowcaseUITests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.gustavo.Reddit-ShowcaseUITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = "Reddit-Showcase";
-			};
-			name = Debug;
-		};
-		71DCFA402670452B009E5234 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = J642JTAX63;
-				INFOPLIST_FILE = "Reddit-ShowcaseUITests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.gustavo.Reddit-ShowcaseUITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = "Reddit-Showcase";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -639,15 +527,6 @@
 			buildConfigurations = (
 				71DCFA3C2670452B009E5234 /* Debug */,
 				71DCFA3D2670452B009E5234 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		71DCFA3E2670452B009E5234 /* Build configuration list for PBXNativeTarget "Reddit-ShowcaseUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				71DCFA3F2670452B009E5234 /* Debug */,
-				71DCFA402670452B009E5234 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
