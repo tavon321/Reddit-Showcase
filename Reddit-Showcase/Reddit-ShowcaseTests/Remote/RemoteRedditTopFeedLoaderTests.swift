@@ -7,6 +7,14 @@
 
 import XCTest
 
+extension HTTPURLResponse {
+    private static var OK_200: Int { return 200 }
+
+    var isOK: Bool {
+        return statusCode == HTTPURLResponse.OK_200
+    }
+}
+
 protocol HTTPClient {
     typealias Result = Swift.Result<(Data, HTTPURLResponse), Error>
     
@@ -21,6 +29,7 @@ class RemoteRedditTopFeedLoader {
     
     enum Error: Swift.Error {
         case connectivity
+        case invalidData
     }
     
     init(url: URL, client: HTTPClient) {
@@ -29,8 +38,16 @@ class RemoteRedditTopFeedLoader {
     }
     
     func load(page: String, limit: String, completion: @escaping (Result) -> Void) {
-        client.load(url: make(url: url, with: page, limit: limit)) { _ in
-            completion(.connectivity)
+        client.load(url: make(url: url, with: page, limit: limit)) { result in
+            switch result {
+            case let .success((_, response)):
+                guard response.isOK else {
+                    completion(.invalidData)
+                    return
+                }
+            default:
+                completion(.connectivity)
+            }
         }
     }
     
@@ -80,9 +97,19 @@ class RemoteRedditTopFeedLoaderTests: XCTestCase {
     func test_loadFeed_deliversConnectivityErrorOnClientsError() {
         let (sut, client) = makeSUT(url: anyURL)
 
-        expect(sut,
-               toCompleteWith: .connectivity) {
+        expect(sut, toCompleteWith: .connectivity) {
             client.complete(with: anyNSError)
+        }
+    }
+    
+    func test_loadFeed_deliversInvalidDataErrorOnNon200HTTPResponse() {
+        let (sut, client) = makeSUT(url: anyURL)
+        let statusCodes = [199, 201, 400, 500]
+        
+        statusCodes.enumerated().forEach { (index, statusCode) in
+            expect(sut, toCompleteWith: .invalidData) {
+                client.complete(statusCode: statusCode, data: Data(), at: index)
+            }
         }
     }
     
@@ -107,7 +134,7 @@ class RemoteRedditTopFeedLoaderTests: XCTestCase {
                         when action: () -> Void) {
         let exp = expectation(description: "wait for result")
         sut.load(page: anyPage, limit: anyLimit) { receivedResult in
-            XCTAssertEqual(expectedResult, .connectivity)
+            XCTAssertEqual(receivedResult, expectedResult, file: file, line: line)
             exp.fulfill()
         }
         
@@ -139,6 +166,14 @@ class RemoteRedditTopFeedLoaderTests: XCTestCase {
         
         func complete(with error: Error, at index: Int = 0) {
             completions[index](.failure(error))
+        }
+        
+        func complete(statusCode: Int, data: Data, at index: Int = 0) {
+            let response = HTTPURLResponse(url: requestedUrls[index],
+                                           statusCode: statusCode,
+                                           httpVersion: nil,
+                                           headerFields: [:])!
+            completions[index](.success((data, response)))
         }
     }
 }
