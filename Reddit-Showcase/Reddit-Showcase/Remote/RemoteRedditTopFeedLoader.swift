@@ -56,7 +56,16 @@ public class RemoteRedditTopFeedLoader: RedditTopFeedLoader {
 
 internal final class RemoteRedditTopFeedMapper {
     struct Root: Decodable {
-        let data: RemoteRedditFeedList
+        let data: List
+    }
+    
+    struct List: Decodable {
+        let after: String?
+        let children: [Children]
+    }
+    
+    struct Children: Decodable {
+        let data: RemoteRedditFeed
     }
 
     static func map(data: Data, response: HTTPURLResponse) throws -> RemoteRedditFeedList {
@@ -64,7 +73,8 @@ internal final class RemoteRedditTopFeedMapper {
             throw RemoteRedditTopFeedLoader.Error.invalidData
         }
         
-        return root.data
+        return RemoteRedditFeedList(pagination: root.data.after,
+                                    feedItems: root.data.children.map({ $0.data }))
     }
 }
 

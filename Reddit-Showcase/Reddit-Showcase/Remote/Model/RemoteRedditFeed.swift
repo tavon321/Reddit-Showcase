@@ -26,7 +26,7 @@ public struct RemoteRedditFeed: Decodable {
     public let title: String
     public let author: String
     public let entryDate: TimeInterval
-    public let numberOfComments: String
+    public let numberOfComments: Int
     public let thumbnail: URL?
     public let imageURL: URL?
     public let visited: Bool
@@ -34,7 +34,7 @@ public struct RemoteRedditFeed: Decodable {
     public init(title: String,
                 author: String,
                 entryDate: TimeInterval,
-                numberOfComments: String,
+                numberOfComments: Int,
                 thumbnail: URL?,
                 imageURL: URL?,
                 visited: Bool) {
@@ -46,7 +46,18 @@ public struct RemoteRedditFeed: Decodable {
         self.imageURL = imageURL
         self.visited = visited
     }
+    
+    enum CodingKeys: String, CodingKey {
+        case title
+        case author = "author_fullname"
+        case entryDate = "created"
+        case numberOfComments = "num_comments"
+        case thumbnail
+        case imageURL = "url"
+        case visited
+    }
 }
+
 extension RemoteRedditFeedList {
     func toModel() -> RedditFeedList {
         RedditFeedList(pagination: pagination, feedItems: feedItems.mapModels())
@@ -56,13 +67,14 @@ extension RemoteRedditFeedList {
 extension Array where Element == RemoteRedditFeed {
     func mapModels() -> [RedditFeed] {
         return self.map {
-            RedditFeed(title: $0.title,
-                             author: $0.author,
-                             entryDate: $0.entryDate,
-                             numberOfComments: $0.numberOfComments,
-                             thumbnail: $0.thumbnail,
-                             imageURL: $0.imageURL,
-                             visited: $0.visited)
+            let imageURL = $0.imageURL?.pathExtension == "jpg" ? $0.imageURL : nil
+            return RedditFeed(title: $0.title,
+                              author: $0.author,
+                              entryDate: $0.entryDate,
+                              numberOfComments: "\($0.numberOfComments)",
+                              thumbnail: $0.thumbnail,
+                              imageURL: imageURL,
+                              visited: $0.visited)
         }
     }
 }
