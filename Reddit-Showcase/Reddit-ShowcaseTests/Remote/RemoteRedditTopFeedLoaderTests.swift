@@ -79,15 +79,11 @@ class RemoteRedditTopFeedLoaderTests: XCTestCase {
     
     func test_loadFeed_deliversConnectivityErrorOnClientsError() {
         let (sut, client) = makeSUT(url: anyURL)
-        
-        let exp = expectation(description: "wait for result")
-        sut.load(page: anyPage, limit: anyLimit) { error in
-            XCTAssertEqual(error, .connectivity)
-            exp.fulfill()
+
+        expect(sut,
+               toCompleteWith: .connectivity) {
+            client.complete(with: anyNSError)
         }
-        
-        client.complete(with: anyNSError)
-        wait(for: [exp], timeout: 0.1)
     }
     
     // MARK: - Helpers
@@ -96,12 +92,27 @@ class RemoteRedditTopFeedLoaderTests: XCTestCase {
     private var anyLimit: String { "50" }
     private var anyNSError: NSError { NSError(domain: "any error", code: 0) }
     
-    func url(_ url: URL, with page: String, limit: String) -> URL {
+    private func url(_ url: URL, with page: String, limit: String) -> URL {
         let queryItems = [URLQueryItem(name: "limit", value: limit), URLQueryItem(name: "after", value: page)]
         var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: true)
         urlComponents?.queryItems = queryItems
         
         return urlComponents!.url!
+    }
+    
+    private func expect(_ sut: RemoteRedditTopFeedLoader,
+                        toCompleteWith expectedResult: RemoteRedditTopFeedLoader.Result,
+                        file: StaticString = #file,
+                        line: UInt = #line,
+                        when action: () -> Void) {
+        let exp = expectation(description: "wait for result")
+        sut.load(page: anyPage, limit: anyLimit) { receivedResult in
+            XCTAssertEqual(expectedResult, .connectivity)
+            exp.fulfill()
+        }
+        
+        action()
+        wait(for: [exp], timeout: 0.1)
     }
     
     private func makeSUT(url: URL = URL(string: "https://any-url.com")!,
