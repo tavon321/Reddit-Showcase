@@ -7,6 +7,12 @@
 
 import Foundation
 
+public struct RedditFeedList {
+    var limit: Int
+    var pagination: String
+    var feedItems: [RedditFeed]
+}
+
 public struct RedditFeed {
     let title: String
     let author: String

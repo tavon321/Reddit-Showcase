@@ -16,6 +16,7 @@
 		71DCFA292670452B009E5234 /* Reddit_ShowcaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71DCFA282670452B009E5234 /* Reddit_ShowcaseTests.swift */; };
 		71DCFA342670452B009E5234 /* Reddit_ShowcaseUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71DCFA332670452B009E5234 /* Reddit_ShowcaseUITests.swift */; };
 		71DCFA4726704610009E5234 /* RedditFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71DCFA4626704610009E5234 /* RedditFeed.swift */; };
+		71DCFA49267047E0009E5234 /* RedditTopFeedLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71DCFA48267047E0009E5234 /* RedditTopFeedLoader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,7 @@
 		71DCFA332670452B009E5234 /* Reddit_ShowcaseUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reddit_ShowcaseUITests.swift; sourceTree = "<group>"; };
 		71DCFA352670452B009E5234 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		71DCFA4626704610009E5234 /* RedditFeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedditFeed.swift; sourceTree = "<group>"; };
+		71DCFA48267047E0009E5234 /* RedditTopFeedLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedditTopFeedLoader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -167,6 +169,7 @@
 			isa = PBXGroup;
 			children = (
 				71DCFA4626704610009E5234 /* RedditFeed.swift */,
+				71DCFA48267047E0009E5234 /* RedditTopFeedLoader.swift */,
 			);
 			path = Feature;
 			sourceTree = "<group>";
@@ -303,6 +306,7 @@
 			files = (
 				71DCFA162670452A009E5234 /* ViewController.swift in Sources */,
 				71DCFA122670452A009E5234 /* AppDelegate.swift in Sources */,
+				71DCFA49267047E0009E5234 /* RedditTopFeedLoader.swift in Sources */,
 				71DCFA142670452A009E5234 /* SceneDelegate.swift in Sources */,
 				71DCFA4726704610009E5234 /* RedditFeed.swift in Sources */,
 			);
