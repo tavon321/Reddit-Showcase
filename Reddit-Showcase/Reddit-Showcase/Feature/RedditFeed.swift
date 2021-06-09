@@ -7,14 +7,9 @@
 
 import Foundation
 
-public struct RedditFeedList: Decodable, Equatable {
+public struct RedditFeedList: Equatable {
     public var pagination: String?
     public var feedItems: [RedditFeed]
-    
-    enum CodingKeys: String, CodingKey {
-        case pagination = "after"
-        case feedItems = "children"
-    }
     
     public init(pagination: String? = nil, feedItems: [RedditFeed]) {
         self.pagination = pagination
@@ -22,10 +17,10 @@ public struct RedditFeedList: Decodable, Equatable {
     }
 }
 
-public struct RedditFeed: Decodable, Equatable {
+public struct RedditFeed: Equatable {
     public let title: String
     public let author: String
-    public let entryDate: Date
+    public let entryDate: TimeInterval
     public let numberOfComments: String
     public let thumbnail: URL?
     public let imageURL: URL?
@@ -33,7 +28,7 @@ public struct RedditFeed: Decodable, Equatable {
     
     public init(title: String,
                 author: String,
-                entryDate: Date,
+                entryDate: TimeInterval,
                 numberOfComments: String,
                 thumbnail: URL?,
                 imageURL: URL?,

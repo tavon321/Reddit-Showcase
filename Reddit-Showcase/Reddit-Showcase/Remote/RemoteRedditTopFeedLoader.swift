@@ -39,7 +39,7 @@ public class RemoteRedditTopFeedLoader: RedditTopFeedLoader {
     private static func map(data: Data, response: HTTPURLResponse) -> Result {
         do {
             let remote = try RemoteRedditTopFeedMapper.map(data: data, response: response)
-            return .success(remote)
+            return .success(remote.toModel())
         } catch {
             return .failure(error)
         }
@@ -56,10 +56,10 @@ public class RemoteRedditTopFeedLoader: RedditTopFeedLoader {
 
 internal final class RemoteRedditTopFeedMapper {
     struct Root: Decodable {
-        let data: RedditFeedList
+        let data: RemoteRedditFeedList
     }
 
-    static func map(data: Data, response: HTTPURLResponse) throws -> RedditFeedList {
+    static func map(data: Data, response: HTTPURLResponse) throws -> RemoteRedditFeedList {
         guard response.isOK, let root = try? JSONDecoder().decode(Root.self, from: data) else {
             throw RemoteRedditTopFeedLoader.Error.invalidData
         }
@@ -67,3 +67,4 @@ internal final class RemoteRedditTopFeedMapper {
         return root.data
     }
 }
+
