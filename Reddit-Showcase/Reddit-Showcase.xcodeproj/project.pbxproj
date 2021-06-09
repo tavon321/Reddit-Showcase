@@ -99,12 +99,9 @@
 		71DCFA102670452A009E5234 /* Reddit-Showcase */ = {
 			isa = PBXGroup;
 			children = (
-				71DCFA112670452A009E5234 /* AppDelegate.swift */,
-				71DCFA132670452A009E5234 /* SceneDelegate.swift */,
-				71DCFA152670452A009E5234 /* ViewController.swift */,
-				71DCFA172670452A009E5234 /* Main.storyboard */,
-				71DCFA1A2670452A009E5234 /* Assets.xcassets */,
-				71DCFA1C2670452A009E5234 /* LaunchScreen.storyboard */,
+				71DCFA44267045C3009E5234 /* Resources */,
+				71DCFA43267045BC009E5234 /* Launch */,
+				71DCFA41267045A6009E5234 /* View */,
 				71DCFA1F2670452A009E5234 /* Info.plist */,
 			);
 			path = "Reddit-Showcase";
@@ -126,6 +123,41 @@
 				71DCFA352670452B009E5234 /* Info.plist */,
 			);
 			path = "Reddit-ShowcaseUITests";
+			sourceTree = "<group>";
+		};
+		71DCFA41267045A6009E5234 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				71DCFA42267045B2009E5234 /* Controller */,
+				71DCFA1C2670452A009E5234 /* LaunchScreen.storyboard */,
+				71DCFA172670452A009E5234 /* Main.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		71DCFA42267045B2009E5234 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				71DCFA152670452A009E5234 /* ViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		71DCFA43267045BC009E5234 /* Launch */ = {
+			isa = PBXGroup;
+			children = (
+				71DCFA112670452A009E5234 /* AppDelegate.swift */,
+				71DCFA132670452A009E5234 /* SceneDelegate.swift */,
+			);
+			path = Launch;
+			sourceTree = "<group>";
+		};
+		71DCFA44267045C3009E5234 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				71DCFA1A2670452A009E5234 /* Assets.xcassets */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
