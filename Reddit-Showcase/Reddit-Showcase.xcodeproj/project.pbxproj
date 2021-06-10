@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		710B1C492672C76200E18BC2 /* RedditFeedPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 710B1C482672C76200E18BC2 /* RedditFeedPresenter.swift */; };
 		716565432670E8D900D23349 /* RemoteRedditTopFeedLoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 716565422670E8D900D23349 /* RemoteRedditTopFeedLoaderTests.swift */; };
 		716565462670ED3500D23349 /* XCTestsCase+TrackForMemoryLeaks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 716565452670ED3500D23349 /* XCTestsCase+TrackForMemoryLeaks.swift */; };
 		71656549267105BB00D23349 /* RemoteRedditTopFeedLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71656548267105BB00D23349 /* RemoteRedditTopFeedLoader.swift */; };
@@ -41,6 +42,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		710B1C482672C76200E18BC2 /* RedditFeedPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedditFeedPresenter.swift; sourceTree = "<group>"; };
 		716565422670E8D900D23349 /* RemoteRedditTopFeedLoaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteRedditTopFeedLoaderTests.swift; sourceTree = "<group>"; };
 		716565452670ED3500D23349 /* XCTestsCase+TrackForMemoryLeaks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestsCase+TrackForMemoryLeaks.swift"; sourceTree = "<group>"; };
 		71656548267105BB00D23349 /* RemoteRedditTopFeedLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteRedditTopFeedLoader.swift; sourceTree = "<group>"; };
@@ -86,6 +88,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		710B1C472672BC9B00E18BC2 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				710B1C482672C76200E18BC2 /* RedditFeedPresenter.swift */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
 		716565412670E88100D23349 /* Remote */ = {
 			isa = PBXGroup;
 			children = (
@@ -187,6 +197,7 @@
 			children = (
 				716565442670ED1F00D23349 /* Helpers */,
 				716565412670E88100D23349 /* Remote */,
+				710B1C472672BC9B00E18BC2 /* Presentation */,
 				71DCFA282670452B009E5234 /* Reddit_ShowcaseTests.swift */,
 				71DCFA2A2670452B009E5234 /* Info.plist */,
 			);
@@ -361,6 +372,7 @@
 				71DCFA292670452B009E5234 /* Reddit_ShowcaseTests.swift in Sources */,
 				71F3AF9B267184AF007FCE79 /* URLSessionHttpClientTest.swift in Sources */,
 				716565462670ED3500D23349 /* XCTestsCase+TrackForMemoryLeaks.swift in Sources */,
+				710B1C492672C76200E18BC2 /* RedditFeedPresenter.swift in Sources */,
 				7165655626710D2300D23349 /* loadJson.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
