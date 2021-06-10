@@ -74,6 +74,34 @@ class RemoteRedditImageLoaderTest: XCTestCase {
         })
     }
     
+    func test_loadImageDataFromURL_doesNotDeliverResultAfterCancellingTask() {
+        let (sut, client) = makeSUT()
+        let nonEmptyData = Data("non-empty data".utf8)
+
+        var received = [RemoteImageDataLoader.Result]()
+        let task = sut.loadImageData(from: anyURL) { received.append($0) }
+        task.cancel()
+        
+        client.complete(statusCode: 404, data: anyData)
+        client.complete(statusCode: 200, data: nonEmptyData)
+        client.complete(with: anyNSError)
+        
+        XCTAssertTrue(received.isEmpty, "Expected no received results after cancelling task")
+    }
+    
+    func test_loadImageDataFromURL_doesNotDeliverResultAfterSUTInstanceHasBeenDeallocated() {
+        let client = HTTPClientSpy()
+        var sut: RemoteImageDataLoader? = RemoteImageDataLoader(client: client)
+        
+        var capturedResults = [RemoteImageDataLoader.Result]()
+        _ = sut?.loadImageData(from: anyURL) { capturedResults.append($0) }
+        
+        sut = nil
+        client.complete(statusCode: 200, data: anyData)
+        
+        XCTAssertTrue(capturedResults.isEmpty)
+    }
+    
     // MARK: - Helpers
     private func makeSUT(url: URL = anyURL,
                          file: StaticString = #file,

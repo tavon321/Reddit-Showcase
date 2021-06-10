@@ -26,19 +26,40 @@ public final class RemoteImageDataLoader: ImageDataLoader {
         case connectivity
         case invalidData
     }
+    
+    private final class HTTPClientTaskWrapper: HTTPClientTask {
+        private var completion: ((Result) -> Void)?
+        
+        var wrapped: HTTPClientTask?
+        
+        init(_ completion: @escaping (Result) -> Void) {
+            self.completion = completion
+        }
+        
+        func complete(with result: Result) {
+            completion?(result)
+        }
+        
+        func cancel() {
+            completion = nil
+            wrapped?.cancel()
+        }
+    }
 
     public func loadImageData(from url: URL, completion: @escaping (Result) -> Void) -> HTTPClientTask {
-        let task = client.load(url: url) { [weak self] result in
+        let task = HTTPClientTaskWrapper(completion)
+        task.wrapped = client.load(url: url) { [weak self] result in
             guard self != nil else { return }
+            
             switch result {
             case let .success((data, response)):
                 guard response.isOK && !data.isEmpty else {
-                    completion(.failure(Error.invalidData))
+                    task.complete(with: .failure(Error.invalidData))
                     return
                 }
-                completion(.success(data))
+                task.complete(with: .success(data))
             case .failure:
-                completion(.failure(Error.connectivity))
+                task.complete(with: .failure(Error.connectivity))
             }
         }
         return task
