@@ -171,6 +171,7 @@ class RemoteRedditTopFeedLoaderTests: XCTestCase {
         private(set) var completions = [(HTTPClient.Result) -> Void]()
         private(set) var cancelledURLs = [URL]()
         
+        @discardableResult
         func load(url: URL, completion: @escaping (HTTPClient.Result) -> Void) -> HTTPClientTask {
             requestedUrls.append(url)
             completions.append(completion)
