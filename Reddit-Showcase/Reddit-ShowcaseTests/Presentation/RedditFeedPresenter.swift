@@ -6,36 +6,7 @@
 //
 
 import XCTest
-
-public struct FeedErrorViewModel {
-    public let message: String?
-    
-    static var noError: FeedErrorViewModel {
-        return FeedErrorViewModel(message: nil)
-    }
-    
-    static func error(message: String) -> FeedErrorViewModel {
-        return FeedErrorViewModel(message: message)
-    }
-}
-
-public protocol RedditFeedView {
-    func display(isLoading: Bool)
-    func display(_ viewModel: FeedErrorViewModel)
-}
-
-public class RedditFeedPresenter {
-    private let view: RedditFeedView
-    
-    public init(view: RedditFeedView) {
-        self.view = view
-    }
-    
-    public func didStartLoading() {
-        view.display(isLoading: false)
-        view.display(.noError)
-    }
-}
+import Reddit_Showcase
 
 class RedditFeedPresenterTests: XCTestCase {
     
