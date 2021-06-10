@@ -10,6 +10,7 @@ import Reddit_Showcase
 
 var anyNSError: NSError { NSError(domain: "any error", code: 0) }
 var anyURL: URL{ URL(string: "https://any-url.com")! }
+var anyData: Data { Data("any data".utf8) }
 
 var sampleFeedList = makeFeed([sampleFeed],
                               pagination: "t3_nv6kri")

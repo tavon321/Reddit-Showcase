@@ -48,6 +48,9 @@ class RedditFeedPresenterTests: XCTestCase {
         let view = ViewSpy()
         let sut = RedditFeedPresenter(view: view)
         
+        trackForMemoryLeaks(sut, file: file, line: line)
+        trackForMemoryLeaks(view, file: file, line: line)
+        
         return (sut: sut, view: view)
     }
     

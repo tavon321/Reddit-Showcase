@@ -71,8 +71,6 @@ class URLSessionHttpClientTest: XCTestCase {
         return HTTPURLResponse(url: anyURL, mimeType: nil, expectedContentLength: 0, textEncodingName: nil)
     }
     
-    private var anyData: Data { Data("any data".utf8) }
-    
     private func resultSucceedFor(data: Data?,
                                   response: URLResponse?,
                                   file: StaticString = #file,
