@@ -106,10 +106,6 @@ class RemoteRedditTopFeedLoaderTests: XCTestCase {
     // MARK: - Helpers
     private var anyPage: String { "any-page" }
     private var anyLimit: String { "50" }
-   
-    private func makeFeed(_ feed: [RedditFeed], pagination: String? = nil) -> RedditFeedList {
-        RedditFeedList(pagination: pagination, feedItems: feed)
-    }
     
     private func failure(_ error: RemoteRedditTopFeedLoader.Error) -> RemoteRedditTopFeedLoader.Result {
         return .failure(error)

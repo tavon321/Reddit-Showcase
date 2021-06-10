@@ -1,5 +1,5 @@
 //
-//  RedditFeedPresenter.swift
+//  RedditFeedPresenterTests.swift
 //  Reddit-ShowcaseTests
 //
 //  Created by Gustavo on 10/06/21.
@@ -33,6 +33,16 @@ class RedditFeedPresenterTests: XCTestCase {
                                        .display(errorMessage: RedditFeedPresenter.errorMessage)])
     }
     
+    func test_didFinishLoadingWithFeed_stopsLoadingAndDeliverFormatterFeed() {
+        let (sut, view) = makeSUT()
+        let expectedFeedList = sampleFeedList
+        
+        sut.didFinishLoading(with: expectedFeedList)
+        
+        XCTAssertEqual(view.messages, [.display(isLoading: false),
+                                       .display(feedListViewModel: FeedListViewModel(feedList: expectedFeedList))])
+    }
+    
     // MARK: Helpers
     func makeSUT(file: StaticString = #file, line: UInt = #line) -> (sut: RedditFeedPresenter, view: ViewSpy) {
         let view = ViewSpy()
@@ -45,6 +55,7 @@ class RedditFeedPresenterTests: XCTestCase {
         enum Message: Hashable {
             case display(isLoading: Bool)
             case display(errorMessage: String?)
+            case display(feedListViewModel: FeedListViewModel)
         }
         
         private(set) var messages = Set<Message>()
@@ -55,6 +66,10 @@ class RedditFeedPresenterTests: XCTestCase {
         
         func display(_ viewModel: FeedErrorViewModel) {
             messages.insert(.display(errorMessage: viewModel.message))
+        }
+        
+        func display(_ viewModel: FeedListViewModel) {
+            messages.insert(.display(feedListViewModel: viewModel))
         }
     }
 }
