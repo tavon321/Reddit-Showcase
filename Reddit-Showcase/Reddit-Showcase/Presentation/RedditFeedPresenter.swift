@@ -28,7 +28,7 @@ public struct FeedViewModel: Hashable {
     public let imageURL: URL?
     public let visited: Bool
     
-    init(item: RedditFeed) {
+    public init(item: RedditFeed) {
         self.title = item.title
         self.author = item.author
         self.entryDate = item.entryDate
