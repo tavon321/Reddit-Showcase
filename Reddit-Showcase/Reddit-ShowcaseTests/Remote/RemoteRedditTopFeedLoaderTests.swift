@@ -162,12 +162,22 @@ class RemoteRedditTopFeedLoaderTests: XCTestCase {
     }
     
     private class HTTPClientSpy: HTTPClient {
+        private struct Task: HTTPClientTask {
+            let callback: () -> Void
+            func cancel() { callback() }
+        }
+        
         private(set) var requestedUrls = [URL]()
         private(set) var completions = [(HTTPClient.Result) -> Void]()
+        private(set) var cancelledURLs = [URL]()
         
-        func load(url: URL, completion: @escaping (HTTPClient.Result) -> Void) {
+        func load(url: URL, completion: @escaping (HTTPClient.Result) -> Void) -> HTTPClientTask {
             requestedUrls.append(url)
             completions.append(completion)
+            
+            return Task { [weak self] in
+                self?.cancelledURLs.append(url)
+            }
         }
         
         func complete(with error: Error, at index: Int = 0) {
