@@ -21,7 +21,16 @@ class RedditFeedPresenterTests: XCTestCase {
         
         sut.didStartLoading()
         
-        XCTAssertEqual(view.messages, [.display(isLoading: false), .display(errorMessage: nil)])
+        XCTAssertEqual(view.messages, [.display(isLoading: true), .display(errorMessage: nil)])
+    }
+    
+    func test_didFinishLoadingWithError_stopsLoadingAndPresentError() {
+        let (sut, view) = makeSUT()
+        
+        sut.didFinishLoading(with: anyNSError)
+        
+        XCTAssertEqual(view.messages, [.display(isLoading: false),
+                                       .display(errorMessage: RedditFeedPresenter.errorMessage)])
     }
     
     // MARK: Helpers
