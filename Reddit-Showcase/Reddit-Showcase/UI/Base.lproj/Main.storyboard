@@ -3,21 +3,46 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Feed View Controller-->
         <scene sceneID="tZE-ZF-uZT">
             <objects>
-                <tableViewController id="FgX-fB-Z6A" customClass="ViewController" customModule="Reddit_Showcase" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="FgX-fB-Z6A" customClass="FeedViewController" customModule="Reddit_Showcase" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="hpK-J6-pGl">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <view key="tableHeaderView" contentMode="scaleToFill" id="Za6-66-ewu" customClass="ErrorView" customModule="Reddit_Showcase">
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="34"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ibr-P2-WpM">
+                                    <rect key="frame" x="8" y="8" width="398" height="18"/>
+                                    <viewLayoutGuide key="safeArea" id="roW-u7-ZOP"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <color key="backgroundColor" red="0.99951404330000004" green="0.41759261489999999" blue="0.4154433012" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <gestureRecognizers/>
+                            <constraints>
+                                <constraint firstItem="Ibr-P2-WpM" firstAttribute="top" secondItem="Za6-66-ewu" secondAttribute="top" constant="8" id="8Sx-vJ-Wbq"/>
+                                <constraint firstItem="Ibr-P2-WpM" firstAttribute="leading" secondItem="Za6-66-ewu" secondAttribute="leadingMargin" id="DOW-us-aFS"/>
+                                <constraint firstAttribute="bottom" secondItem="Ibr-P2-WpM" secondAttribute="bottom" constant="8" id="Fs5-6h-eZ3"/>
+                                <constraint firstAttribute="trailingMargin" secondItem="Ibr-P2-WpM" secondAttribute="trailing" id="Ptw-aN-icH"/>
+                            </constraints>
+                            <connections>
+                                <outlet property="label" destination="Ibr-P2-WpM" id="d71-nn-n8X"/>
+                            </connections>
+                        </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="tgz-AD-FNF" customClass="RedditFeedCell" customModule="Reddit_Showcase" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="24.5" width="414" height="269"/>
+                                <rect key="frame" x="0.0" y="58.5" width="414" height="269"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="tgz-AD-FNF" id="d7i-VC-ueG">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="269"/>
@@ -139,6 +164,9 @@
                             <outlet property="delegate" destination="FgX-fB-Z6A" id="hX6-Fa-gsK"/>
                         </connections>
                     </tableView>
+                    <connections>
+                        <outlet property="errorView" destination="Ibr-P2-WpM" id="FLe-bo-wyt"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Uvl-FA-O8W" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

@@ -9,10 +9,10 @@ import UIKit
 
 struct RedditFeedUIComposer {
     
-    static func makeFeedViewController() -> ViewController {
-        let bundle = Bundle(for: ViewController.self)
+    static func makeFeedViewController() -> FeedViewController {
+        let bundle = Bundle(for: FeedViewController.self)
         let storyboard = UIStoryboard(name: "Main", bundle: bundle)
-        let feedController = storyboard.instantiateInitialViewController() as! ViewController
+        let feedController = storyboard.instantiateInitialViewController() as! FeedViewController
         return feedController
     }
 }
