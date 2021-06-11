@@ -8,28 +8,41 @@
 import XCTest
 import Reddit_Showcase
 
-public struct FeedImageViewModel {
+public struct FeedImageViewModel<Image> {
     public let title: String
     public let author: String
     public let elapsedInterval: String
     public let numberOfComments: String
     public let imageURL: URL?
-    public let thumnail: UIImage?
+    public let thumnail: Image?
     public let isLoading: Bool
 }
 
 public protocol ImagePresenterView {
-    func display(_ model: FeedImageViewModel)
+    associatedtype Image
+    func display(_ model: FeedImageViewModel<Image>)
 }
 
-public class ImagePresenter {
-    private let view: ImagePresenterView
+public class ImagePresenter<View: ImagePresenterView, Image> where View.Image == Image {
+    private let view: View
+    private let imageTransformer: (Data) -> Image?
     
-    public init(view: ImagePresenterView) {
+    public init(view: View, imageTransformer: @escaping (Data) -> Image?) {
         self.view = view
+        self.imageTransformer = imageTransformer
     }
     
     func didStartLoadingImageData(for model: FeedViewModel) {
+        view.display(.init(title: model.title,
+                           author: model.author,
+                           elapsedInterval: model.elapsedInterval,
+                           numberOfComments: model.numberOfComments,
+                           imageURL: model.imageURL,
+                           thumnail: nil,
+                           isLoading: true))
+    }
+    
+    func ddidFinishLoadingImageData(with data: Data, for model: FeedViewModel) {
         view.display(.init(title: model.title,
                            author: model.author,
                            elapsedInterval: model.elapsedInterval,
@@ -65,21 +78,24 @@ class ImagePresenterTests: XCTestCase {
     
     // MARK: Helpers
     private var feedModel = FeedViewModel(item: sampleFeed)
+    private struct AnyImage: Equatable {}
     
-    private func makeSUT(file: StaticString = #file,
-                         line: UInt = #line) -> (sut: ImagePresenter, view: ImagePresenterViewSpy) {
-        let view = ImagePresenterViewSpy()
-        let sut = ImagePresenter(view: view)
+    private func makeSUT(imageTransformer: @escaping (Data) -> AnyImage? = { _ in nil },
+                         file: StaticString = #file,
+                         line: UInt = #line)
+    -> (sut: ImagePresenter<ViewSpy, AnyImage>, view: ViewSpy) {
+        let view = ViewSpy()
+        let sut = ImagePresenter(view: view, imageTransformer: imageTransformer)
         
         trackForMemoryLeaks(view, file: file, line: line)
         trackForMemoryLeaks(sut, file: file, line: line)
         return (sut, view)
     }
     
-    private class ImagePresenterViewSpy: ImagePresenterView {
-        private(set) var messages = [FeedImageViewModel]()
+    private class ViewSpy: ImagePresenterView {
+        private(set) var messages = [FeedImageViewModel<AnyImage>]()
         
-        func display(_ model: FeedImageViewModel) {
+        func display(_ model: FeedImageViewModel<AnyImage>) {
             messages.append(model)
         }
     }
