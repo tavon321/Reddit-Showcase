@@ -17,6 +17,8 @@
 		710B1C5A2672D74800E18BC2 /* RemoteImageDataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 710B1C592672D74800E18BC2 /* RemoteImageDataLoader.swift */; };
 		710B1C5D2672D90500E18BC2 /* HTTPClientSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 710B1C5C2672D90500E18BC2 /* HTTPClientSpy.swift */; };
 		710B1C5F2672DDAF00E18BC2 /* ImagePresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 710B1C5E2672DDAF00E18BC2 /* ImagePresenterTests.swift */; };
+		710B1C612672E47600E18BC2 /* ImagePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 710B1C602672E47600E18BC2 /* ImagePresenter.swift */; };
+		710B1C632672E48600E18BC2 /* FeedImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 710B1C622672E48600E18BC2 /* FeedImageViewModel.swift */; };
 		716565432670E8D900D23349 /* RemoteRedditTopFeedLoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 716565422670E8D900D23349 /* RemoteRedditTopFeedLoaderTests.swift */; };
 		716565462670ED3500D23349 /* XCTestsCase+TrackForMemoryLeaks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 716565452670ED3500D23349 /* XCTestsCase+TrackForMemoryLeaks.swift */; };
 		71656549267105BB00D23349 /* RemoteRedditTopFeedLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71656548267105BB00D23349 /* RemoteRedditTopFeedLoader.swift */; };
@@ -61,6 +63,8 @@
 		710B1C592672D74800E18BC2 /* RemoteImageDataLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteImageDataLoader.swift; sourceTree = "<group>"; };
 		710B1C5C2672D90500E18BC2 /* HTTPClientSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClientSpy.swift; sourceTree = "<group>"; };
 		710B1C5E2672DDAF00E18BC2 /* ImagePresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePresenterTests.swift; sourceTree = "<group>"; };
+		710B1C602672E47600E18BC2 /* ImagePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePresenter.swift; sourceTree = "<group>"; };
+		710B1C622672E48600E18BC2 /* FeedImageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedImageViewModel.swift; sourceTree = "<group>"; };
 		716565422670E8D900D23349 /* RemoteRedditTopFeedLoaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteRedditTopFeedLoaderTests.swift; sourceTree = "<group>"; };
 		716565452670ED3500D23349 /* XCTestsCase+TrackForMemoryLeaks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestsCase+TrackForMemoryLeaks.swift"; sourceTree = "<group>"; };
 		71656548267105BB00D23349 /* RemoteRedditTopFeedLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteRedditTopFeedLoader.swift; sourceTree = "<group>"; };
@@ -122,6 +126,7 @@
 				710B1C502672CDF800E18BC2 /* Helpers */,
 				710B1C4D2672CA2300E18BC2 /* ViewModels */,
 				710B1C4B2672CA1900E18BC2 /* RedditFeedPresenter.swift */,
+				710B1C602672E47600E18BC2 /* ImagePresenter.swift */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -131,6 +136,7 @@
 			children = (
 				710B1C4E2672CA3600E18BC2 /* FeedErrorViewModel.swift */,
 				710B1C552672D49F00E18BC2 /* FeedListViewModel.swift */,
+				710B1C622672E48600E18BC2 /* FeedImageViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -411,6 +417,7 @@
 			files = (
 				71DCFA162670452A009E5234 /* ViewController.swift in Sources */,
 				71F3AF9F267188AD007FCE79 /* URLSessionHTTPClient.swift in Sources */,
+				710B1C632672E48600E18BC2 /* FeedImageViewModel.swift in Sources */,
 				710B1C562672D49F00E18BC2 /* FeedListViewModel.swift in Sources */,
 				71656551267105F500D23349 /* HTTPURLResponse+statusCodes.swift in Sources */,
 				716565592671189000D23349 /* RemoteRedditFeed.swift in Sources */,
@@ -419,6 +426,7 @@
 				71656549267105BB00D23349 /* RemoteRedditTopFeedLoader.swift in Sources */,
 				710B1C522672CE0500E18BC2 /* Date+Helpers.swift in Sources */,
 				7165654E267105E100D23349 /* HTTPClient.swift in Sources */,
+				710B1C612672E47600E18BC2 /* ImagePresenter.swift in Sources */,
 				71DCFA49267047E0009E5234 /* RedditTopFeedLoader.swift in Sources */,
 				710B1C4C2672CA1900E18BC2 /* RedditFeedPresenter.swift in Sources */,
 				710B1C4F2672CA3600E18BC2 /* FeedErrorViewModel.swift in Sources */,

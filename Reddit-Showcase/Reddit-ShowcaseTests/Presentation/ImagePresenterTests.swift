@@ -8,51 +8,6 @@
 import XCTest
 import Reddit_Showcase
 
-public struct FeedImageViewModel<Image> {
-    public let title: String
-    public let author: String
-    public let elapsedInterval: String
-    public let numberOfComments: String
-    public let imageURL: URL?
-    public let thumbnail: Image?
-    public let isLoading: Bool
-}
-
-public protocol ImagePresenterView {
-    associatedtype Image
-    func display(_ model: FeedImageViewModel<Image>)
-}
-
-public class ImagePresenter<View: ImagePresenterView, Image> where View.Image == Image {
-    private let view: View
-    private let imageTransformer: (Data) -> Image?
-    
-    public init(view: View, imageTransformer: @escaping (Data) -> Image?) {
-        self.view = view
-        self.imageTransformer = imageTransformer
-    }
-    
-    func didStartLoadingImageData(for model: FeedViewModel) {
-        view.display(.init(title: model.title,
-                           author: model.author,
-                           elapsedInterval: model.elapsedInterval,
-                           numberOfComments: model.numberOfComments,
-                           imageURL: model.imageURL,
-                           thumbnail: nil,
-                           isLoading: true))
-    }
-    
-    func didFinishLoadingImageData(with data: Data, for model: FeedViewModel) {
-        view.display(.init(title: model.title,
-                           author: model.author,
-                           elapsedInterval: model.elapsedInterval,
-                           numberOfComments: model.numberOfComments,
-                           imageURL: model.imageURL,
-                           thumbnail: imageTransformer(data),
-                           isLoading: false))
-    }
-}
-
 class ImagePresenterTests: XCTestCase {
     func test_init_doesNotMessageView() {
         let (_, view) = makeSUT()
