@@ -16,6 +16,13 @@ class FeedViewController: UITableViewController, RedditFeedView {
     
     public var delegate: FeedViewControllerDelegate?
     
+    private var currentPage: String = ""
+    
+    private var loadingControllers = [IndexPath: CellController]()
+    private var tableModel = [CellController]() {
+        didSet { tableView.reloadData() }
+    }
+    
     public override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -23,6 +30,7 @@ class FeedViewController: UITableViewController, RedditFeedView {
     }
     
     @IBAction private func refresh() {
+        currentPage = ""
         delegate?.didRequestFeedRefresh(page: "")
     }
     
@@ -32,29 +40,24 @@ class FeedViewController: UITableViewController, RedditFeedView {
         tableView.sizeTableHeaderToFit()
     }
     
+    func display(_ controllers: [CellController], page: String) {
+        loadingControllers = [:]
+        currentPage = page
+        tableModel = controllers
+    }
+    
     func display(isLoading: Bool) {
-        
+        refreshControl?.update(isRefreshing: isLoading)
     }
     
     func display(_ viewModel: FeedErrorViewModel) {
-        
+        errorView?.message = viewModel.message
     }
-    
-    func display(_ viewModel: FeedListViewModel) {
-        
-    }
+   
 }
 
-extension UITableView {
-    func sizeTableHeaderToFit() {
-        guard let header = tableHeaderView else { return }
-        
-        let size = header.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
-        
-        let needsFrameUpdate = header.frame.height != size.height
-        if needsFrameUpdate {
-            header.frame.size.height = size.height
-            tableHeaderView = header
-        }
+extension UIRefreshControl {
+    func update(isRefreshing: Bool) {
+        isRefreshing ? beginRefreshing() : endRefreshing()
     }
 }
