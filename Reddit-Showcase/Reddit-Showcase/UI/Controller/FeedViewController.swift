@@ -13,6 +13,7 @@ public protocol FeedViewControllerDelegate {
 
 class FeedViewController: UITableViewController, RedditFeedView {
     @IBOutlet private(set) public var errorView: ErrorView?
+    private var dataSource: FeedViewControllerDataSource!
     
     public var delegate: FeedViewControllerDelegate?
     
@@ -20,13 +21,20 @@ class FeedViewController: UITableViewController, RedditFeedView {
     
     private var loadingControllers = [IndexPath: CellController]()
     private var tableModel = [CellController]() {
-        didSet { tableView.reloadData() }
+        didSet { dataSource?.applySnapshot(for: tableModel) }
     }
     
     public override func viewDidLoad() {
         super.viewDidLoad()
-        
+        configTable()
         refresh()
+    }
+    
+    private func configTable() {
+        tableView.dataSource = dataSource
+        dataSource = FeedViewControllerDataSource(tableView: tableView) { [weak self] indexPath in
+            self?.cellController(forRowAt: indexPath)
+        }
     }
     
     @IBAction private func refresh() {
@@ -53,7 +61,27 @@ class FeedViewController: UITableViewController, RedditFeedView {
     func display(_ viewModel: FeedErrorViewModel) {
         errorView?.message = viewModel.message
     }
-   
+    
+    private func cellController(forRowAt indexPath: IndexPath) -> CellController {
+        let controller = tableModel[indexPath.row]
+        loadingControllers[indexPath] = controller
+        return controller
+    }
+    
+    public func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+        indexPaths.forEach { indexPath in
+            cellController(forRowAt: indexPath).preload()
+        }
+    }
+    
+    public func tableView(_ tableView: UITableView, cancelPrefetchingForRowsAt indexPaths: [IndexPath]) {
+        indexPaths.forEach(cancelCellControllerLoad)
+    }
+    
+    private func cancelCellControllerLoad(forRowAt indexPath: IndexPath) {
+        loadingControllers[indexPath]?.cancelLoad()
+        loadingControllers[indexPath] = nil
+    }
 }
 
 extension UIRefreshControl {
