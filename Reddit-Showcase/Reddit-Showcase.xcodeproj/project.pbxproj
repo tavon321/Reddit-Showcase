@@ -16,6 +16,7 @@
 		710B1C582672D4F800E18BC2 /* RemoteRedditImageLoaderTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 710B1C572672D4F800E18BC2 /* RemoteRedditImageLoaderTest.swift */; };
 		710B1C5A2672D74800E18BC2 /* RemoteImageDataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 710B1C592672D74800E18BC2 /* RemoteImageDataLoader.swift */; };
 		710B1C5D2672D90500E18BC2 /* HTTPClientSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 710B1C5C2672D90500E18BC2 /* HTTPClientSpy.swift */; };
+		710B1C5F2672DDAF00E18BC2 /* ImagePresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 710B1C5E2672DDAF00E18BC2 /* ImagePresenterTests.swift */; };
 		716565432670E8D900D23349 /* RemoteRedditTopFeedLoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 716565422670E8D900D23349 /* RemoteRedditTopFeedLoaderTests.swift */; };
 		716565462670ED3500D23349 /* XCTestsCase+TrackForMemoryLeaks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 716565452670ED3500D23349 /* XCTestsCase+TrackForMemoryLeaks.swift */; };
 		71656549267105BB00D23349 /* RemoteRedditTopFeedLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71656548267105BB00D23349 /* RemoteRedditTopFeedLoader.swift */; };
@@ -59,6 +60,7 @@
 		710B1C572672D4F800E18BC2 /* RemoteRedditImageLoaderTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteRedditImageLoaderTest.swift; sourceTree = "<group>"; };
 		710B1C592672D74800E18BC2 /* RemoteImageDataLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteImageDataLoader.swift; sourceTree = "<group>"; };
 		710B1C5C2672D90500E18BC2 /* HTTPClientSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClientSpy.swift; sourceTree = "<group>"; };
+		710B1C5E2672DDAF00E18BC2 /* ImagePresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePresenterTests.swift; sourceTree = "<group>"; };
 		716565422670E8D900D23349 /* RemoteRedditTopFeedLoaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteRedditTopFeedLoaderTests.swift; sourceTree = "<group>"; };
 		716565452670ED3500D23349 /* XCTestsCase+TrackForMemoryLeaks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestsCase+TrackForMemoryLeaks.swift"; sourceTree = "<group>"; };
 		71656548267105BB00D23349 /* RemoteRedditTopFeedLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteRedditTopFeedLoader.swift; sourceTree = "<group>"; };
@@ -109,6 +111,7 @@
 			children = (
 				710B1C482672C76200E18BC2 /* RedditFeedPresenterTests.swift */,
 				710B1C532672D2B600E18BC2 /* FeedViewModelTests.swift */,
+				710B1C5E2672DDAF00E18BC2 /* ImagePresenterTests.swift */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -435,6 +438,7 @@
 				71F3AF9B267184AF007FCE79 /* URLSessionHttpClientTest.swift in Sources */,
 				716565462670ED3500D23349 /* XCTestsCase+TrackForMemoryLeaks.swift in Sources */,
 				710B1C492672C76200E18BC2 /* RedditFeedPresenterTests.swift in Sources */,
+				710B1C5F2672DDAF00E18BC2 /* ImagePresenterTests.swift in Sources */,
 				710B1C542672D2B600E18BC2 /* FeedViewModelTests.swift in Sources */,
 				7165655626710D2300D23349 /* loadJson.swift in Sources */,
 				710B1C5D2672D90500E18BC2 /* HTTPClientSpy.swift in Sources */,
