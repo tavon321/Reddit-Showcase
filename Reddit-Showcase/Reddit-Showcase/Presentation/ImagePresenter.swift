@@ -7,13 +7,13 @@
 
 import Foundation
 
-public protocol ImagePresenterView {
+public protocol ImagePresenterView: AnyObject {
     associatedtype Image
     func display(_ model: FeedImageViewModel<Image>)
 }
 
 public class ImagePresenter<View: ImagePresenterView, Image> where View.Image == Image {
-    private let view: View
+    private weak var view: View?
     private let imageTransformer: (Data) -> Image?
     
     public init(view: View, imageTransformer: @escaping (Data) -> Image?) {
@@ -22,7 +22,7 @@ public class ImagePresenter<View: ImagePresenterView, Image> where View.Image ==
     }
     
     public func didStartLoadingImageData(for model: FeedViewModel) {
-        view.display(.init(title: model.title,
+        view?.display(.init(title: model.title,
                            author: model.author,
                            entryDate: model.entryDate,
                            numberOfComments: model.numberOfComments,
@@ -32,7 +32,7 @@ public class ImagePresenter<View: ImagePresenterView, Image> where View.Image ==
     }
     
     public func didFinishLoadingImageData(with data: Data, for model: FeedViewModel) {
-        view.display(.init(title: model.title,
+        view?.display(.init(title: model.title,
                            author: model.author,
                            entryDate: model.entryDate,
                            numberOfComments: model.numberOfComments,
@@ -42,7 +42,7 @@ public class ImagePresenter<View: ImagePresenterView, Image> where View.Image ==
     }
     
     public func didFinishLoadingImageData(with error: Error, for model: FeedViewModel) {
-        view.display(.init(title: model.title,
+        view?.display(.init(title: model.title,
                            author: model.author,
                            entryDate: model.entryDate,
                            numberOfComments: model.numberOfComments,

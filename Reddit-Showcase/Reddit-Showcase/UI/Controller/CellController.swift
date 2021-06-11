@@ -12,7 +12,7 @@ protocol CellControllerDelegate {
     func didCancelImageRequest()
 }
 
-class CellController {
+class CellController: ImagePresenterView {
     private let delegate: CellControllerDelegate
     private var cell: RedditFeedCell?
     private let thumbnailUrl: URL?
