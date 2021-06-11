@@ -8,6 +8,8 @@
 import Foundation
 
 final class FeedLoaderPresentationAdapter: FeedViewControllerDelegate {
+    private let cache = NSCache<NSString, NSData>()
+    
     func didRequestFeedRefresh(page: String) {
         
     }
