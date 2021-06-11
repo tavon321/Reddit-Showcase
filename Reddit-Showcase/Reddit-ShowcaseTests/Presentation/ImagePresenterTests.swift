@@ -14,7 +14,7 @@ public struct FeedImageViewModel<Image> {
     public let elapsedInterval: String
     public let numberOfComments: String
     public let imageURL: URL?
-    public let thumnail: Image?
+    public let thumbnail: Image?
     public let isLoading: Bool
 }
 
@@ -38,18 +38,18 @@ public class ImagePresenter<View: ImagePresenterView, Image> where View.Image ==
                            elapsedInterval: model.elapsedInterval,
                            numberOfComments: model.numberOfComments,
                            imageURL: model.imageURL,
-                           thumnail: nil,
+                           thumbnail: nil,
                            isLoading: true))
     }
     
-    func ddidFinishLoadingImageData(with data: Data, for model: FeedViewModel) {
+    func didFinishLoadingImageData(with data: Data, for model: FeedViewModel) {
         view.display(.init(title: model.title,
                            author: model.author,
                            elapsedInterval: model.elapsedInterval,
                            numberOfComments: model.numberOfComments,
                            imageURL: model.imageURL,
-                           thumnail: nil,
-                           isLoading: true))
+                           thumbnail: imageTransformer(data),
+                           isLoading: false))
     }
 }
 
@@ -74,6 +74,24 @@ class ImagePresenterTests: XCTestCase {
         XCTAssertEqual(message?.numberOfComments, model.numberOfComments)
         XCTAssertEqual(message?.imageURL, model.imageURL)
         XCTAssertEqual(message?.isLoading, true)
+    }
+    
+    func test_didFinishLaodingImageFata_displayViewModelWithImage() {
+        let transformedData = AnyImage()
+        let (sut, view) = makeSUT(imageTransformer: { _ in transformedData })
+        let model = feedModel
+        
+        sut.didFinishLoadingImageData(with: Data(), for: model)
+        
+        let message = view.messages.first
+        XCTAssertEqual(view.messages.count, 1)
+        XCTAssertEqual(message?.title, model.title)
+        XCTAssertEqual(message?.author, model.author)
+        XCTAssertEqual(message?.elapsedInterval, model.elapsedInterval)
+        XCTAssertEqual(message?.numberOfComments, model.numberOfComments)
+        XCTAssertEqual(message?.imageURL, model.imageURL)
+        XCTAssertEqual(message?.isLoading, false)
+        XCTAssertEqual(message?.thumbnail, transformedData)
     }
     
     // MARK: Helpers
