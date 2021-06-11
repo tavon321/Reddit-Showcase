@@ -20,13 +20,13 @@ public struct FeedImageViewModel<Image> {
         Date(timeIntervalSince1970: entryDate).getElapsedInterval()
     }
     
-    internal init(title: String,
-                  author: String,
-                  entryDate: TimeInterval,
-                  numberOfComments: String,
-                  imageURL: URL?,
-                  thumbnail: Image?,
-                  isLoading: Bool) {
+    public init(title: String,
+                author: String,
+                entryDate: TimeInterval,
+                numberOfComments: String,
+                imageURL: URL?,
+                thumbnail: Image?,
+                isLoading: Bool) {
         self.title = title
         self.author = author
         self.entryDate = entryDate
