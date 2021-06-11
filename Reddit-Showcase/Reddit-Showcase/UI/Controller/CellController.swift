@@ -12,7 +12,7 @@ protocol CellControllerDelegate {
     func didCancelImageRequest()
 }
 
-class CellController: ImagePresenterView {
+class CellController: Hashable, ImagePresenterView {
     private let delegate: CellControllerDelegate
     private var cell: RedditFeedCell?
     private let thumbnailUrl: URL?
@@ -47,6 +47,13 @@ class CellController: ImagePresenterView {
         delegate.didCancelImageRequest()
     }
     
+    public func hash(into hasher: inout Hasher) {
+        return hasher.combine(cell)
+    }
+    
+    public static func == (lhs: CellController, rhs: CellController) -> Bool {
+        return lhs.cell == rhs.cell
+    }
 }
 
 private extension UITableView {

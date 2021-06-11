@@ -27,6 +27,8 @@
 		713778A5267421130017FE16 /* CellController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 713778A4267421130017FE16 /* CellController.swift */; };
 		713778A9267422620017FE16 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 713778A8267422620017FE16 /* ErrorView.swift */; };
 		713778AB2674280D0017FE16 /* FeedViewAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 713778AA2674280D0017FE16 /* FeedViewAdapter.swift */; };
+		713778AD26742DE10017FE16 /* FeedViewControllerDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 713778AC26742DE10017FE16 /* FeedViewControllerDataSource.swift */; };
+		713778B026742E010017FE16 /* UITableView+helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 713778AF26742E010017FE16 /* UITableView+helpers.swift */; };
 		716565432670E8D900D23349 /* RemoteRedditTopFeedLoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 716565422670E8D900D23349 /* RemoteRedditTopFeedLoaderTests.swift */; };
 		716565462670ED3500D23349 /* XCTestsCase+TrackForMemoryLeaks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 716565452670ED3500D23349 /* XCTestsCase+TrackForMemoryLeaks.swift */; };
 		71656549267105BB00D23349 /* RemoteRedditTopFeedLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71656548267105BB00D23349 /* RemoteRedditTopFeedLoader.swift */; };
@@ -81,6 +83,8 @@
 		713778A4267421130017FE16 /* CellController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellController.swift; sourceTree = "<group>"; };
 		713778A8267422620017FE16 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		713778AA2674280D0017FE16 /* FeedViewAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewAdapter.swift; sourceTree = "<group>"; };
+		713778AC26742DE10017FE16 /* FeedViewControllerDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewControllerDataSource.swift; sourceTree = "<group>"; };
+		713778AF26742E010017FE16 /* UITableView+helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+helpers.swift"; sourceTree = "<group>"; };
 		716565422670E8D900D23349 /* RemoteRedditTopFeedLoaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteRedditTopFeedLoaderTests.swift; sourceTree = "<group>"; };
 		716565452670ED3500D23349 /* XCTestsCase+TrackForMemoryLeaks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestsCase+TrackForMemoryLeaks.swift"; sourceTree = "<group>"; };
 		71656548267105BB00D23349 /* RemoteRedditTopFeedLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteRedditTopFeedLoader.swift; sourceTree = "<group>"; };
@@ -190,6 +194,14 @@
 			isa = PBXGroup;
 			children = (
 				713778A226741D3D0017FE16 /* URL+SharedHelpers.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		713778AE26742DF60017FE16 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				713778AF26742E010017FE16 /* UITableView+helpers.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -309,6 +321,7 @@
 		71DCFA41267045A6009E5234 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				713778AE26742DF60017FE16 /* Helpers */,
 				71FF86282674138D0012F03B /* View */,
 				71DCFA42267045B2009E5234 /* Controller */,
 				71DCFA1C2670452A009E5234 /* LaunchScreen.storyboard */,
@@ -322,6 +335,7 @@
 			children = (
 				71DCFA152670452A009E5234 /* FeedViewController.swift */,
 				713778A4267421130017FE16 /* CellController.swift */,
+				713778AC26742DE10017FE16 /* FeedViewControllerDataSource.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -488,6 +502,8 @@
 				710B1C4F2672CA3600E18BC2 /* FeedErrorViewModel.swift in Sources */,
 				71DCFA142670452A009E5234 /* SceneDelegate.swift in Sources */,
 				71DCFA4726704610009E5234 /* RedditFeed.swift in Sources */,
+				713778B026742E010017FE16 /* UITableView+helpers.swift in Sources */,
+				713778AD26742DE10017FE16 /* FeedViewControllerDataSource.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
