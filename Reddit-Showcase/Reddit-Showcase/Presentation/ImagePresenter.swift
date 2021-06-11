@@ -40,4 +40,14 @@ public class ImagePresenter<View: ImagePresenterView, Image> where View.Image ==
                            thumbnail: imageTransformer(data),
                            isLoading: false))
     }
+    
+    public func didFinishLoadingImageData(with error: Error, for model: FeedViewModel) {
+        view.display(.init(title: model.title,
+                           author: model.author,
+                           elapsedInterval: model.elapsedInterval,
+                           numberOfComments: model.numberOfComments,
+                           imageURL: model.imageURL,
+                           thumbnail: nil,
+                           isLoading: false))
+    }
 }

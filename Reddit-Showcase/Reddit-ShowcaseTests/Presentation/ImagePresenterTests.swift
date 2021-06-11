@@ -31,7 +31,7 @@ class ImagePresenterTests: XCTestCase {
         XCTAssertEqual(message?.isLoading, true)
     }
     
-    func test_didFinishLaodingImageFata_displayViewModelWithImage() {
+    func test_didFinishLoadingImageData_Ok_displayViewModelWithImage() {
         let transformedData = AnyImage()
         let (sut, view) = makeSUT(imageTransformer: { _ in transformedData })
         let model = feedModel
@@ -47,6 +47,24 @@ class ImagePresenterTests: XCTestCase {
         XCTAssertEqual(message?.imageURL, model.imageURL)
         XCTAssertEqual(message?.isLoading, false)
         XCTAssertEqual(message?.thumbnail, transformedData)
+    }
+    
+    func test_didFinishLoadingmageData_Error_displayViewModelWithoutImage() {
+        let transformedData = AnyImage()
+        let (sut, view) = makeSUT(imageTransformer: { _ in transformedData })
+        let model = feedModel
+        
+        sut.didFinishLoadingImageData(with: anyNSError, for: model)
+        
+        let message = view.messages.first
+        XCTAssertEqual(view.messages.count, 1)
+        XCTAssertEqual(message?.title, model.title)
+        XCTAssertEqual(message?.author, model.author)
+        XCTAssertEqual(message?.elapsedInterval, model.elapsedInterval)
+        XCTAssertEqual(message?.numberOfComments, model.numberOfComments)
+        XCTAssertEqual(message?.imageURL, model.imageURL)
+        XCTAssertEqual(message?.isLoading, false)
+        XCTAssertEqual(message?.thumbnail, nil)
     }
     
     // MARK: Helpers
