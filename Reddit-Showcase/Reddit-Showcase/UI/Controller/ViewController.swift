@@ -7,10 +7,9 @@
 
 import UIKit
 
-class ViewController: UITableViewController {
+public protocol FeedViewControllerDelegate {
+    func didRequestFeedRefresh(page: String)
+}
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view.
-    }
+class ViewController: UITableViewController {
 }
