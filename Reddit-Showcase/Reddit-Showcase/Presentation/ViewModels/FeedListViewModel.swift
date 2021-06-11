@@ -22,7 +22,7 @@ public struct FeedListViewModel: Hashable {
 public struct FeedViewModel: Hashable {
     public let title: String
     public let author: String
-    private let entryDate: TimeInterval
+    public let entryDate: TimeInterval
     public let numberOfComments: String
     public let thumbnail: URL?
     public let imageURL: URL?
@@ -36,9 +36,5 @@ public struct FeedViewModel: Hashable {
         self.thumbnail = item.thumbnail
         self.imageURL = item.imageURL
         self.visited = item.visited
-    }
-    
-    public var elapsedInterval: String {
-        Date(timeIntervalSince1970: entryDate).getElapsedInterval()
     }
 }

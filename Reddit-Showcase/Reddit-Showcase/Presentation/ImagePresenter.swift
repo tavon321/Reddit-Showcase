@@ -24,7 +24,7 @@ public class ImagePresenter<View: ImagePresenterView, Image> where View.Image ==
     public func didStartLoadingImageData(for model: FeedViewModel) {
         view.display(.init(title: model.title,
                            author: model.author,
-                           elapsedInterval: model.elapsedInterval,
+                           entryDate: model.entryDate,
                            numberOfComments: model.numberOfComments,
                            imageURL: model.imageURL,
                            thumbnail: nil,
@@ -34,7 +34,7 @@ public class ImagePresenter<View: ImagePresenterView, Image> where View.Image ==
     public func didFinishLoadingImageData(with data: Data, for model: FeedViewModel) {
         view.display(.init(title: model.title,
                            author: model.author,
-                           elapsedInterval: model.elapsedInterval,
+                           entryDate: model.entryDate,
                            numberOfComments: model.numberOfComments,
                            imageURL: model.imageURL,
                            thumbnail: imageTransformer(data),
@@ -44,7 +44,7 @@ public class ImagePresenter<View: ImagePresenterView, Image> where View.Image ==
     public func didFinishLoadingImageData(with error: Error, for model: FeedViewModel) {
         view.display(.init(title: model.title,
                            author: model.author,
-                           elapsedInterval: model.elapsedInterval,
+                           entryDate: model.entryDate,
                            numberOfComments: model.numberOfComments,
                            imageURL: model.imageURL,
                            thumbnail: nil,

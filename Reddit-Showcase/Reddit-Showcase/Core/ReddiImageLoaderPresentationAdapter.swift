@@ -7,7 +7,7 @@
 
 import Foundation
 
-class ReddiImageLoaderPresentationAdapter<View: ImagePresenterView, Image> where View.Image == Image {
+class ReddiImageLoaderPresentationAdapter<View: ImagePresenterView, Image>: CellControllerDelegate where View.Image == Image {
     private let model: FeedViewModel
     private let imageLoader: RemoteImageDataLoader
     private var cache = NSCache<NSURL, NSData>()
