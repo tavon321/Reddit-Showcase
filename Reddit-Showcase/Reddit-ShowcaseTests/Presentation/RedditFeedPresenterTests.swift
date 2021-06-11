@@ -46,7 +46,7 @@ class RedditFeedPresenterTests: XCTestCase {
     // MARK: Helpers
     func makeSUT(file: StaticString = #file, line: UInt = #line) -> (sut: RedditFeedPresenter, view: ViewSpy) {
         let view = ViewSpy()
-        let sut = RedditFeedPresenter(view: view)
+        let sut = RedditFeedPresenter(view: view, listView: view)
         
         trackForMemoryLeaks(sut, file: file, line: line)
         trackForMemoryLeaks(view, file: file, line: line)
@@ -54,7 +54,7 @@ class RedditFeedPresenterTests: XCTestCase {
         return (sut: sut, view: view)
     }
     
-    class ViewSpy: RedditFeedView {
+    class ViewSpy: RedditFeedView, RedditListView {
         enum Message: Hashable {
             case display(isLoading: Bool)
             case display(errorMessage: String?)
