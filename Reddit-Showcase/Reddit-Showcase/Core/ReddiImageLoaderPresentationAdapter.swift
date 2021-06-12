@@ -47,7 +47,7 @@ class ReddiImageLoaderPresentationAdapter<View: ImagePresenterView, Image>: Cell
             switch result {
             case .success(let data):
                 self?.imageSaver.save(data, completion: { error in
-                    if error {
+                    if let error = error {
                         print("save image error \(error)")
                     }
                 })
