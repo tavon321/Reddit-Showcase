@@ -97,6 +97,15 @@ class ImagePresenterTests: XCTestCase {
         XCTAssertEqual(view.saveMessages, [.delete(expetedIndex)])
     }
     
+    func test_displayExpandedImage_messageViewToExpandImageWithURL() {
+        let (sut, view) = makeSUT()
+        let expectedUrl = anyURL
+        
+        sut.displayExpandedImage(with: expectedUrl)
+        
+        XCTAssertEqual(view.saveMessages, [.presentImage(expectedUrl)])
+    }
+    
     // MARK: Helpers
     private var feedModel = FeedViewModel(item: sampleFeed)
     private struct AnyImage: Equatable {}
@@ -106,14 +115,19 @@ class ImagePresenterTests: XCTestCase {
                          line: UInt = #line)
     -> (sut: ImagePresenter<ViewSpy, AnyImage>, view: ViewSpy) {
         let view = ViewSpy()
-        let sut = ImagePresenter(view: view, cellDestructionView: view, imageTransformer: imageTransformer)
+        let sut = ImagePresenter(view: view,
+                                 cellDestructionView: view,
+                                 expandedImagePresenterView: view,
+                                 imageTransformer: imageTransformer)
         
         trackForMemoryLeaks(view, file: file, line: line)
         trackForMemoryLeaks(sut, file: file, line: line)
         return (sut, view)
     }
     
-    private class ViewSpy: ImagePresenterView, CellDestructionView {
+    private class ViewSpy: ImagePresenterView, CellDestructionView, ExpandedImagePresenterView {
+        
+        
         private(set) var messages = [FeedImageViewModel<AnyImage>]()
         private(set) var saveMessages = [SaveMessage]()
         
@@ -121,6 +135,7 @@ class ImagePresenterTests: XCTestCase {
             case isSavingData(Bool)
             case displayError(Bool)
             case delete(IndexPath)
+            case presentImage(URL)
         }
         
         func display(_ model: FeedImageViewModel<AnyImage>) {
@@ -137,6 +152,10 @@ class ImagePresenterTests: XCTestCase {
         
         func removeCell(at index: IndexPath) {
             saveMessages.append(.delete(index))
+        }
+        
+        func presentExpanedImage(at url: URL) {
+            saveMessages.append(.presentImage(url))
         }
     }
 }
