@@ -9,6 +9,7 @@ import UIKit
 
 public protocol PhotoLibrary {
     
+    func save(_ image: UIImage)
 }
 
 public class LibraryImageSaver: NSObject {
@@ -16,5 +17,9 @@ public class LibraryImageSaver: NSObject {
     
     public init(photoLibrary: PhotoLibrary) {
         self.photoLibrary = photoLibrary
+    }
+    
+    public func save(_ image: UIImage) {
+        photoLibrary.save(image)
     }
 }
