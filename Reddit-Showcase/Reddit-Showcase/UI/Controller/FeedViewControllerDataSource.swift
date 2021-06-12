@@ -7,7 +7,7 @@
 
 import UIKit
 
-class FeedViewControllerDataSource: UITableViewDiffableDataSource<Int, CellController> {
+class FeedViewControllerDataSource: UITableViewDiffableDataSource<Int, CellController> {   
     convenience init(tableView: UITableView,
                      cellController: @escaping (IndexPath) -> CellController?) {
         self.init(tableView: tableView) { (tableView, indexPath, controller) -> UITableViewCell? in

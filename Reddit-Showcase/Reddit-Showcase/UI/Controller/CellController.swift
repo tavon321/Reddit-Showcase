@@ -16,10 +16,12 @@ class CellController: Hashable, ImagePresenterView {
     private let delegate: CellControllerDelegate
     private var cell: RedditFeedCell?
     private let thumbnailUrl: URL?
+    private let model: FeedViewModel
     
-    public init(thumbnailUrl: URL?, delegate: CellControllerDelegate) {
+    public init(thumbnailUrl: URL?, model: FeedViewModel, delegate: CellControllerDelegate) {
         self.delegate = delegate
         self.thumbnailUrl = thumbnailUrl
+        self.model = model
     }
     
     func view(in tableView: UITableView, at indexpath: IndexPath) -> UITableViewCell {
@@ -47,11 +49,11 @@ class CellController: Hashable, ImagePresenterView {
     }
     
     public func hash(into hasher: inout Hasher) {
-        return hasher.combine(cell)
+        return hasher.combine(model)
     }
     
     public static func == (lhs: CellController, rhs: CellController) -> Bool {
-        return lhs.cell == rhs.cell
+        return lhs.model == rhs.model
     }
 }
 

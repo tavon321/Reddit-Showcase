@@ -11,7 +11,7 @@ public protocol FeedViewControllerDelegate {
     func didRequestFeedRefresh(page: String)
 }
 
-class FeedViewController: UITableViewController, RedditFeedView {
+class FeedViewController: UITableViewController, RedditFeedView, UITableViewDataSourcePrefetching {
     @IBOutlet private(set) public var errorView: ErrorView?
     private var dataSource: FeedViewControllerDataSource!
     
@@ -28,11 +28,12 @@ class FeedViewController: UITableViewController, RedditFeedView {
     public override func viewDidLoad() {
         super.viewDidLoad()
         configTable()
-        refresh()
+        delegate?.didRequestFeedRefresh(page: "")
     }
     
     private func configTable() {
         tableView.dataSource = dataSource
+        tableView.prefetchDataSource = self
         dataSource = FeedViewControllerDataSource(tableView: tableView) { [weak self] indexPath in
             self?.cellController(forRowAt: indexPath)
         }
@@ -51,6 +52,7 @@ class FeedViewController: UITableViewController, RedditFeedView {
     
     func display(_ controllers: [CellController], page: String) {
         currentPage = page
+        loadingControllers = [:]
         tableModel.append(contentsOf: controllers)
     }
     
@@ -84,10 +86,25 @@ class FeedViewController: UITableViewController, RedditFeedView {
         indexPaths.forEach { indexPath in
             cellController(forRowAt: indexPath).preload()
         }
+        loadNextPageIfNeeded(for: indexPaths)
+    }
+    
+    public override func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cancelCellControllerLoad(forRowAt: indexPath)
     }
     
     public func tableView(_ tableView: UITableView, cancelPrefetchingForRowsAt indexPaths: [IndexPath]) {
         indexPaths.forEach(cancelCellControllerLoad)
+    }
+    
+    private func loadNextPageIfNeeded(for indexPaths: [IndexPath]) {
+        if indexPaths.contains(where: isLoadingCell) {
+            fecthMoreCells()
+        }
+    }
+    
+    private func isLoadingCell(for indexPath: IndexPath) -> Bool {
+        return indexPath.row >= tableModel.count - 1
     }
     
     private func cancelCellControllerLoad(forRowAt indexPath: IndexPath) {
