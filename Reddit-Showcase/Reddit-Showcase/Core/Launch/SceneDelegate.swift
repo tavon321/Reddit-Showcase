@@ -7,6 +7,38 @@
 
 import UIKit
 
+class MainThreadRedditTopFeedLoader: RedditTopFeedLoader {
+    private let loader: RedditTopFeedLoader
+    
+    internal init(loader: RedditTopFeedLoader) {
+        self.loader = loader
+    }
+    
+    func loadFeed(page: String, completion: @escaping (RedditTopFeedLoader.Result) -> Void) {
+        loader.loadFeed(page: page) { result in
+            guaranteeMainThread {
+                completion(result)
+            }
+        }
+    }
+}
+
+class MainThreadImageDataLoader: ImageDataLoader {
+    private let loader: ImageDataLoader
+    
+    internal init(loader: ImageDataLoader) {
+        self.loader = loader
+    }
+    
+    func loadImageData(from url: URL, completion: @escaping (ImageDataLoader.Result) -> Void) -> HTTPClientTask {
+        loader.loadImageData(from: url) { result in
+            guaranteeMainThread {
+                completion(result)
+            }
+        }
+    }
+}
+
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
     
@@ -30,7 +62,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     func configureWindow() {
-        let controller = RedditFeedUIComposer.compose(feedLoader: feedloader, imageLoader: imageLoader)
+        let controller = RedditFeedUIComposer.compose(feedLoader: MainThreadRedditTopFeedLoader(loader: feedloader),
+                                                      imageLoader: MainThreadImageDataLoader(loader: imageLoader))
         window?.rootViewController = UINavigationController(rootViewController: controller)
         
         window?.makeKeyAndVisible()
