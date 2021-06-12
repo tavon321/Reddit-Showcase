@@ -20,9 +20,20 @@ class LibraryImageSaverTests: XCTestCase {
         let expectedImage = AnyImage()
         let (sut, library) = makeSUT(imageTransformer: { _ in expectedImage })
        
-        
         sut.save(anyData) { _ in }
         XCTAssertEqual(library.images, [expectedImage])
+    }
+    
+    func test_save_deliversInavlidImageErrorOnInvalidDataTransform ()  {
+        let (sut, _) = makeSUT(imageTransformer: { _ in nil })
+        
+        var capturedError: Error?
+        sut.save(anyData) { error in
+            capturedError = error
+        }
+        
+        XCTAssertEqual(capturedError as NSError?,
+                       LibraryImageSaver<PhotoLibrarySpy, AnyImage>.InvalidImageError() as NSError)
     }
     
     func test_save_deliversErrorOnSaveError() {

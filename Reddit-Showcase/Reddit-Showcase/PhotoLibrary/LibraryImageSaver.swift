@@ -20,7 +20,9 @@ public class LibraryImageSaver<Library: PhotoLibrary, Image>: ImageSaver where L
     
     public typealias Result = ImageSaver.Result
     
-    struct InvalidImageError: Error {}
+    public struct InvalidImageError: Error {
+        public init() {}
+    }
     
     public init(photoLibrary: Library, imageTransformer: @escaping (Data) -> Image?) {
         self.photoLibrary = photoLibrary
