@@ -10,16 +10,21 @@ import UIKit
 final class FeedViewAdapter: RedditListView {
     private weak var controller: FeedViewController?
     private let imageLoader: ImageDataLoader
+    private let imageSaver: ImageSaver
     
-    init(controller: FeedViewController, imageLoader: ImageDataLoader) {
+    init(controller: FeedViewController,
+         imageLoader: ImageDataLoader,
+         imageSaver: ImageSaver) {
         self.controller = controller
         self.imageLoader = imageLoader
+        self.imageSaver = imageSaver
     }
     
     func display(_ viewModel: FeedListViewModel) {
         controller?.display(viewModel.feedViewModels.map({ model in
             let adapter = ReddiImageLoaderPresentationAdapter<CellController, UIImage>(model: model,
-                                                                                       imageLoader: imageLoader)
+                                                                                       imageLoader: imageLoader,
+                                                                                       imageSaver: imageSaver)
             let controller = CellController(thumbnailUrl: model.thumbnail, model: model, delegate: adapter)
             adapter.presenter = ImagePresenter(view: controller, imageTransformer: UIImage.init)
             

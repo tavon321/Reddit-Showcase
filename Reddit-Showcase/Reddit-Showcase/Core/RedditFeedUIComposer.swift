@@ -10,13 +10,15 @@ import UIKit
 struct RedditFeedUIComposer {
     
     public static func compose(feedLoader: RedditTopFeedLoader,
-                               imageLoader: ImageDataLoader) -> FeedViewController {
+                               imageLoader: ImageDataLoader,
+                               imageSaver: ImageSaver) -> FeedViewController {
         let presentationAdapter = FeedLoaderPresentationAdapter(redditFeedLoader: feedLoader)
         let controller = makeFeedViewController(delegate: presentationAdapter)
         
         presentationAdapter.presenter = RedditFeedPresenter(view: controller,
                                                             listView: FeedViewAdapter(controller: controller,
-                                                                                      imageLoader: imageLoader))
+                                                                                      imageLoader: imageLoader,
+                                                                                      imageSaver: imageSaver))
         return controller
     }
     

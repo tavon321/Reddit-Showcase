@@ -55,6 +55,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         return RemoteImageDataLoader(client: httpClient)
     }()
     
+    private lazy var imageSaver: LibraryImageSaver = {
+        return LibraryImageSaver(photoLibrary: UIPhotoLibrary(), imageTransformer: UIImage.init)
+    }()
+    
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let scene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: scene)
@@ -63,7 +67,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     func configureWindow() {
         let controller = RedditFeedUIComposer.compose(feedLoader: MainThreadRedditTopFeedLoader(loader: feedloader),
-                                                      imageLoader: MainThreadImageDataLoader(loader: imageLoader))
+                                                      imageLoader: MainThreadImageDataLoader(loader: imageLoader),
+                                                      imageSaver: imageSaver)
         window?.rootViewController = UINavigationController(rootViewController: controller)
         
         window?.makeKeyAndVisible()
