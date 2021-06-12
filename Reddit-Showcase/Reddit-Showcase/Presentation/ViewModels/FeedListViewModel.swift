@@ -21,6 +21,7 @@ public struct FeedListViewModel: Hashable {
 
 public struct FeedViewModel: Hashable {
     public let title: String
+    public let name: String
     public let author: String
     public let entryDate: TimeInterval
     public let numberOfComments: String
@@ -29,6 +30,7 @@ public struct FeedViewModel: Hashable {
     
     public init(item: RedditFeed) {
         self.title = item.title
+        self.name = item.name
         self.author = item.author
         self.entryDate = item.entryDate
         self.numberOfComments = item.numberOfComments

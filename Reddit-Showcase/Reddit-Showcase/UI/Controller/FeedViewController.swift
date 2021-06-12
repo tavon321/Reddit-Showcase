@@ -18,7 +18,6 @@ class FeedViewController: UITableViewController, RedditFeedView, UITableViewData
     public var delegate: FeedViewControllerDelegate?
     
     private var currentPage: String = ""
-    private var currentIndexPage: String = ""
     private var isFetchInProgress: Bool = false
     private var cachedImageUrl: URL?
     
@@ -151,12 +150,24 @@ extension FeedViewController: ExpandedImagePresenterView {
 
 // Restore
 extension FeedViewController {
+    private var currentPageRestorationKey: String { "currentPage" }
+    
     override func encodeRestorableState(with coder: NSCoder) {
+        guard let fistVisibleCell = tableView.visibleCells.first,
+              let indexPath = tableView.indexPath(for: fistVisibleCell) else { return }
+        
+        print(cellController(forRowAt: indexPath).name)
+        
+        coder.encode(cellController(forRowAt: indexPath).name, forKey:currentPageRestorationKey)
+        
         super.encodeRestorableState(with: coder)
-        coder.encode(currentPage, forKey: "currentPage")
     }
 
     override func decodeRestorableState(with coder: NSCoder) {
-        super.decodeRestorableState(with: coder)
+        guard let currentPage =
+                coder.decodeObject(forKey: currentPageRestorationKey) as? String else { return }
+        
+        print(currentPage)
+        self.currentPage = currentPage
     }
 }

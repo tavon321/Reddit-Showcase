@@ -21,10 +21,13 @@ final class CellController: Hashable, ImagePresenterView {
     private let thumbnailUrl: URL?
     private var indexpath: IndexPath = IndexPath()
     private var isVisited: Bool = false
+    let name: String
+
     
-    public init(thumbnailUrl: URL?, delegate: CellControllerDelegate) {
+    public init(name: String, thumbnailUrl: URL?, delegate: CellControllerDelegate) {
         self.delegate = delegate
         self.thumbnailUrl = thumbnailUrl
+        self.name = name
     }
     
     func view(in tableView: UITableView, at indexpath: IndexPath) -> UITableViewCell {

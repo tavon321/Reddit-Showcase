@@ -11,7 +11,7 @@
         <!--Feed View Controller-->
         <scene sceneID="tZE-ZF-uZT">
             <objects>
-                <tableViewController restorationIdentifier="FeedViewController" storyboardIdentifier="FeedViewController" id="FgX-fB-Z6A" customClass="FeedViewController" customModule="Reddit_Showcase" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="FeedViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="FgX-fB-Z6A" customClass="FeedViewController" customModule="Reddit_Showcase" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="hpK-J6-pGl">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -185,7 +185,6 @@
                                         <constraint firstItem="MS9-IA-DNo" firstAttribute="leading" secondItem="d7i-VC-ueG" secondAttribute="leadingMargin" constant="8" id="AC5-K0-fwz"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="MS9-IA-DNo" secondAttribute="trailing" constant="8" id="Bdb-d9-ClA"/>
                                         <constraint firstItem="ntV-oz-GWR" firstAttribute="top" secondItem="dLk-gu-vUV" secondAttribute="bottom" constant="16" id="KvM-U2-h7o"/>
-                                        <constraint firstItem="MS9-IA-DNo" firstAttribute="centerX" secondItem="d7i-VC-ueG" secondAttribute="centerX" id="Nle-KU-XA7"/>
                                         <constraint firstItem="ntV-oz-GWR" firstAttribute="centerX" secondItem="d7i-VC-ueG" secondAttribute="centerX" id="O1Z-lk-HmH"/>
                                         <constraint firstItem="MS9-IA-DNo" firstAttribute="top" secondItem="ntV-oz-GWR" secondAttribute="bottom" constant="16" id="Psd-Ew-bc2"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="dLk-gu-vUV" secondAttribute="trailing" constant="12" id="hUk-nh-IS4"/>
