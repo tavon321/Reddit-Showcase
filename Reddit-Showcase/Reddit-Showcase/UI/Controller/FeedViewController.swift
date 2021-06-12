@@ -108,6 +108,10 @@ class FeedViewController: UITableViewController, RedditFeedView, UITableViewData
         indexPaths.forEach(cancelCellControllerLoad)
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableModel[indexPath.row].selectCell()
+    }
+    
     private func loadNextPageIfNeeded(for indexPaths: [IndexPath]) {
         if indexPaths.contains(where: isLoadingCell) {
             fecthMoreCells()
@@ -121,11 +125,5 @@ class FeedViewController: UITableViewController, RedditFeedView, UITableViewData
     private func cancelCellControllerLoad(forRowAt indexPath: IndexPath) {
         loadingControllers[indexPath]?.cancelLoad()
         loadingControllers[indexPath] = nil
-    }
-}
-
-extension UIRefreshControl {
-    func update(isRefreshing: Bool) {
-        isRefreshing ? beginRefreshing() : endRefreshing()
     }
 }

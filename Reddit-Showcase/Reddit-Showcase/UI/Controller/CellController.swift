@@ -17,6 +17,7 @@ class CellController: Hashable, ImagePresenterView {
     private var cell: RedditFeedCell?
     private let thumbnailUrl: URL?
     private let model: FeedViewModel
+    private var isVisited: Bool = false
     
     public init(thumbnailUrl: URL?, model: FeedViewModel, delegate: CellControllerDelegate) {
         self.delegate = delegate
@@ -35,7 +36,12 @@ class CellController: Hashable, ImagePresenterView {
         cell?.thumbnailImageView?.image = viewModel.thumbnail ?? cell?.thumbnailImageView?.image
         cell?.commentLabel?.text = viewModel.numberOfComments
         cell?.authorAndTimeLabel?.text = viewModel.timeAndAuthor
-        cell?.isReadedContainer.isHidden = true
+        cell?.isReadedContainer.isHidden = !isVisited
+    }
+    
+    func selectCell() {
+        isVisited = !isVisited
+        cell?.isReadedContainer.isHidden = !isVisited
     }
     
     func preload() {

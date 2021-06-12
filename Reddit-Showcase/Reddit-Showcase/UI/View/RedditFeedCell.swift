@@ -20,6 +20,7 @@ class RedditFeedCell: UITableViewCell {
         super.awakeFromNib()
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(thumbnailImageViewTapped))
         thumbnailImageView.addGestureRecognizer(tapGesture)
+        selectionStyle = .none
     }
     
     @objc private func thumbnailImageViewTapped() {
