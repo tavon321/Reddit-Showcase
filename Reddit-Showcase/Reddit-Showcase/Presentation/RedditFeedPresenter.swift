@@ -18,7 +18,7 @@ public protocol RedditListView: AnyObject {
 
 public class RedditFeedPresenter {
     private weak var view: RedditFeedView?
-    private weak var listView: RedditListView?
+    private let listView: RedditListView
     
     public static var errorMessage: String {
         "That's a server error"
@@ -41,6 +41,6 @@ public class RedditFeedPresenter {
     
     public func didFinishLoading(with feedList: RedditFeedList) {
         view?.display(isLoading: false)
-        listView?.display(.init(feedList: feedList))
+        listView.display(.init(feedList: feedList))
     }
 }

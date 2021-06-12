@@ -20,6 +20,10 @@ public struct FeedImageViewModel<Image> {
         Date(timeIntervalSince1970: entryDate).getElapsedInterval()
     }
     
+    public var timeAndAuthor: String {
+        "posted by \(author) \(elapsedInterval)"
+    }
+    
     public init(title: String,
                 author: String,
                 entryDate: TimeInterval,

@@ -30,11 +30,10 @@ class CellController: Hashable, ImagePresenterView {
     
     public func display(_ viewModel: FeedImageViewModel<UIImage>) {
         cell?.tiltleLabel?.text = viewModel.title
-        cell?.authorLabel?.text = viewModel.author
-        cell?.tiltleLabel?.text = viewModel.title
-        cell?.tiltleLabel?.text = viewModel.title
-        cell?.tiltleLabel?.text = viewModel.title
-        cell?.tiltleLabel?.text = viewModel.title
+        cell?.thumbnailImageView?.image = viewModel.thumbnail ?? cell?.thumbnailImageView?.image
+        cell?.commentLabel?.text = viewModel.numberOfComments
+        cell?.authorAndTimeLabel?.text = viewModel.timeAndAuthor
+        cell?.isReadedContainer.isHidden = true
     }
     
     func preload() {

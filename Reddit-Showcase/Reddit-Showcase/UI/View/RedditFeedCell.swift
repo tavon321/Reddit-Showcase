@@ -9,11 +9,10 @@ import UIKit
 
 class RedditFeedCell: UITableViewCell {
     @IBOutlet private(set) var tiltleLabel: UILabel!
-    @IBOutlet private(set) var authorLabel: UILabel!
     @IBOutlet private(set) var thumbnailImageView: UIImageView!
     @IBOutlet private(set) var commentLabel: UILabel!
     @IBOutlet private(set) var isReadedContainer: UIStackView!
-    @IBOutlet private(set) var timeAgoLabel: UILabel!
+    @IBOutlet private(set) var authorAndTimeLabel: UILabel!
     
     var onTap: (() -> Void)?
     

@@ -21,7 +21,6 @@ class FeedViewControllerDataSource: UITableViewDiffableDataSource<Int, CellContr
         snapshot.appendSections([0])
         snapshot.appendItems(profiles)
         
-        snapshot.reloadItems(profiles)
         apply(snapshot, animatingDifferences: true)
     }
 }
