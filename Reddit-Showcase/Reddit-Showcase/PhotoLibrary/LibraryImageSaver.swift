@@ -7,12 +7,14 @@
 
 import UIKit
 
-class LibraryImageSaver: NSObject {
-    func writeToPhotoAlbum(image: UIImage) {
-        UIImageWriteToSavedPhotosAlbum(image, self, #selector(saveError), nil)
-    }
+public protocol PhotoLibrary {
+    
+}
 
-    @objc func saveError(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
-        print("Save finished!")
+public class LibraryImageSaver: NSObject {
+    private let photoLibrary: PhotoLibrary
+    
+    public init(photoLibrary: PhotoLibrary) {
+        self.photoLibrary = photoLibrary
     }
 }
