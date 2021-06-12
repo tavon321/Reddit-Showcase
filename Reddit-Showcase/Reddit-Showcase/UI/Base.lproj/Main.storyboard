@@ -157,6 +157,9 @@
                                 </attributes>
                             </fragment>
                         </attributedString>
+                        <connections>
+                            <action selector="refresh" destination="FgX-fB-Z6A" eventType="valueChanged" id="wUk-ah-Nqy"/>
+                        </connections>
                     </refreshControl>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Uvl-FA-O8W" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

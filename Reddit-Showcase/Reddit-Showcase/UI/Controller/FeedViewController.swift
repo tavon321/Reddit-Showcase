@@ -39,6 +39,7 @@ class FeedViewController: UITableViewController, RedditFeedView {
     
     @IBAction private func refresh() {
         currentPage = ""
+        tableModel.removeAll()
         delegate?.didRequestFeedRefresh(page: "")
     }
     
