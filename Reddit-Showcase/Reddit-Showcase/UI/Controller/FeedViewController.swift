@@ -65,8 +65,9 @@ class FeedViewController: UITableViewController, RedditFeedView {
         errorView?.message = viewModel.message
     }
     
-    private func fecthMoreCell(at page: String) {
+    private func fecthMoreCells() {
         guard currentPage != "", !isFetchInProgress else { return }
+        delegate?.didRequestFeedRefresh(page: currentPage)
     }
     
     private func cellController(forRowAt indexPath: IndexPath) -> CellController {
