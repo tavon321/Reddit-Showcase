@@ -13,6 +13,7 @@ protocol CellControllerDelegate {
     func didRequestSaveImage(with url: URL)
 }
 
+
 class CellController: Hashable, ImagePresenterView {
     private let delegate: CellControllerDelegate
     private var cell: RedditFeedCell?
@@ -38,6 +39,12 @@ class CellController: Hashable, ImagePresenterView {
         cell?.commentLabel?.text = viewModel.numberOfComments
         cell?.authorAndTimeLabel?.text = viewModel.timeAndAuthor
         cell?.isReadedContainer.isHidden = !isVisited
+        cell?.saveImage.isHidden = viewModel.imageURL == nil
+        
+        cell?.onSaveTap = { [weak self] in
+            guard let self = self, let url = viewModel.imageURL else { return }
+            self.delegate.didRequestSaveImage(with: url)
+        }
     }
     
     func selectCell() {

@@ -22,23 +22,17 @@ class RedditFeedCell: UITableViewCell {
         super.awakeFromNib()
         selectionStyle = .none
         
-        thumbnailImageView.addTapGesture(action: #selector(thumbnailImageViewTapped))
-        saveImage.addTapGesture(action:  #selector(thumbnailImageViewTapped))
+        thumbnailImageView.addTapGesture(action: #selector(thumbnailImageViewTapped), target: self)
+        saveImage.addTapGesture(action:  #selector(saveImageViewTapped), target: self)
     }
     
     @objc private func saveImageViewTapped() {
-        onSaveTap?()
+        saveImage.showAnimation { [weak self] in
+            self?.onSaveTap?()
+        }
     }
     
     @objc private func thumbnailImageViewTapped() {
         onImageTap?()
-    }
-}
-
-
-extension UIView {
-    func addTapGesture(action: Selector?) {
-        let tapGesture = UITapGestureRecognizer(target: self, action: action)
-        addGestureRecognizer(tapGesture)
     }
 }
