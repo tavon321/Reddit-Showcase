@@ -10,6 +10,8 @@ import Foundation
 public protocol ImagePresenterView: AnyObject {
     associatedtype Image
     func display(_ model: FeedImageViewModel<Image>)
+    func diplay(isSavingData: Bool)
+    func diplay(didFinishSavingDataSuccessfully: Bool)
 }
 
 public class ImagePresenter<View: ImagePresenterView, Image> where View.Image == Image {
@@ -49,5 +51,19 @@ public class ImagePresenter<View: ImagePresenterView, Image> where View.Image ==
                            imageURL: model.imageURL,
                            thumbnail: nil,
                            isLoading: false))
+    }
+    
+    public func didStartSavingData() {
+        view?.diplay(isSavingData: true)
+    }
+    
+    public func didFinishSavingData(with error: Error) {
+        view?.diplay(isSavingData: false)
+        view?.diplay(didFinishSavingDataSuccessfully: true)
+    }
+    
+    public func didFinishSavingData() {
+        view?.diplay(isSavingData: false)
+        view?.diplay(didFinishSavingDataSuccessfully: true)
     }
 }

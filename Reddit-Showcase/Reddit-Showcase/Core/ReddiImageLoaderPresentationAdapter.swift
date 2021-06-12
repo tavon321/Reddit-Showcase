@@ -43,16 +43,18 @@ class ReddiImageLoaderPresentationAdapter<View: ImagePresenterView, Image>: Cell
     }
     
     func didRequestSaveImage(with url: URL) {
+        presenter?.didStartSavingData()
         _ = imageLoader.loadImageData(from: url) { [weak self] result in
             switch result {
             case .success(let data):
                 self?.imageSaver.save(data, completion: { error in
                     if let error = error {
-                        print("save image error \(error)")
+                        self?.presenter?.didFinishSavingData(with: error)
                     }
+                    self?.presenter?.didFinishSavingData()
                 })
             case .failure(let error):
-                print("load image error \(error)")
+                self?.presenter?.didFinishSavingData(with: error)
             }
         }
     }

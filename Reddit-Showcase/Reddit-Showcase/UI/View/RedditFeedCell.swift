@@ -12,7 +12,7 @@ class RedditFeedCell: UITableViewCell {
     @IBOutlet private(set) var thumbnailImageView: UIImageView!
     @IBOutlet private(set) var commentLabel: UILabel!
     @IBOutlet private(set) var isReadedContainer: UIStackView!
-    @IBOutlet private(set) var saveImage: UIStackView!
+    @IBOutlet private(set) var saveImage: SaveImageView!
     @IBOutlet private(set) var authorAndTimeLabel: UILabel!
     
     var onImageTap: (() -> Void)?

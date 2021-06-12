@@ -13,7 +13,6 @@ protocol CellControllerDelegate {
     func didRequestSaveImage(with url: URL)
 }
 
-
 class CellController: Hashable, ImagePresenterView {
     private let delegate: CellControllerDelegate
     private var cell: RedditFeedCell?
@@ -60,6 +59,14 @@ class CellController: Hashable, ImagePresenterView {
     func cancelLoad() {
         cell = nil
         delegate.didCancelImageRequest()
+    }
+    
+    func diplay(isSavingData: Bool) {
+        cell?.saveImage.isLoading = isSavingData
+    }
+    
+    func diplay(didFinishSavingDataSuccessfully: Bool) {
+        cell?.saveImage.finish(error: didFinishSavingDataSuccessfully)
     }
     
     public func hash(into hasher: inout Hasher) {
