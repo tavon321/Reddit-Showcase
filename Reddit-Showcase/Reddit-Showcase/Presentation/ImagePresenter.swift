@@ -67,7 +67,7 @@ public class ImagePresenter<View: ImagePresenterView, Image> where View.Image ==
     
     public func didFinishSavingData(with error: Error) {
         view?.diplay(isSavingData: false)
-        view?.diplay(didFinishSavingDataSuccessfully: true)
+        view?.diplay(didFinishSavingDataSuccessfully: false)
     }
     
     public func didFinishSavingData() {
