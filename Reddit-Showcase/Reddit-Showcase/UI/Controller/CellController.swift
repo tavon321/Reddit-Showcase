@@ -40,7 +40,7 @@ class CellController: Hashable, ImagePresenterView {
         cell?.thumbnailImageView?.image = viewModel.thumbnail ?? cell?.thumbnailImageView?.image
         cell?.commentLabel?.text = viewModel.numberOfComments
         cell?.authorAndTimeLabel?.text = viewModel.timeAndAuthor
-        cell?.isReadedContainer.isHidden = !isVisited
+        cell?.isReadedContainer.isReaded = isVisited
         cell?.saveImage.isHidden = viewModel.imageURL == nil
         
         cell?.onRemoveTap = { [weak self] in
@@ -56,7 +56,7 @@ class CellController: Hashable, ImagePresenterView {
     
     func selectCell() {
         isVisited = !isVisited
-        cell?.isReadedContainer.isHidden = !isVisited
+        cell?.isReadedContainer.isReaded = isVisited
     }
     
     func preload() {
