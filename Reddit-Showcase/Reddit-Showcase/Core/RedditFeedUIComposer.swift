@@ -26,7 +26,7 @@ struct RedditFeedUIComposer {
         let feedController = storyboard.instantiateInitialViewController() as! FeedViewController
         
         feedController.delegate = delegate
-        feedController.title = "Reddit Top Feed by Gustavo"
+        feedController.title = "Reddit Top Feed"
         
         return feedController
     }

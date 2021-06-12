@@ -29,6 +29,13 @@ class FeedViewController: UITableViewController, RedditFeedView, UITableViewData
         super.viewDidLoad()
         configTable()
         delegate?.didRequestFeedRefresh(page: "")
+        configureDismissAllButton()
+    }
+    
+    private func configureDismissAllButton() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Dimiss All",
+                                                            style: .plain,
+                                                            target: self, action: #selector(dismissAllTapped))
     }
     
     private func configTable() {
@@ -37,6 +44,10 @@ class FeedViewController: UITableViewController, RedditFeedView, UITableViewData
         dataSource = FeedViewControllerDataSource(tableView: tableView) { [weak self] indexPath in
             self?.cellController(forRowAt: indexPath)
         }
+    }
+    
+    @objc private func dismissAllTapped() {
+        removeOldCells()
     }
     
     @IBAction private func refresh() {
