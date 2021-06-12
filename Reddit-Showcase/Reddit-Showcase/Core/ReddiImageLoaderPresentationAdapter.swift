@@ -8,7 +8,6 @@
 import UIKit
 
 class ReddiImageLoaderPresentationAdapter<View: ImagePresenterView, Image>: CellControllerDelegate where View.Image == Image {
-    
     private let model: FeedViewModel
     private let imageLoader: ImageDataLoader
     private let imageSaver: ImageSaver
@@ -66,5 +65,9 @@ class ReddiImageLoaderPresentationAdapter<View: ImagePresenterView, Image>: Cell
     
     func didRequestRemoveCell(at index: IndexPath) {
         presenter?.deleteRow(at: index)
+    }
+    
+    func didRequestExpandImage(with url: URL) {
+        presenter?.displayExpandedImage(with: url)
     }
 }

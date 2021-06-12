@@ -19,6 +19,7 @@ class FeedViewController: UITableViewController, RedditFeedView, UITableViewData
     
     private var currentPage: String = ""
     private var isFetchInProgress: Bool = false
+    private var cachedImageUrl: URL?
     
     private var loadingControllers = [IndexPath: CellController]()
     private var tableModel = [CellController]() {
@@ -131,5 +132,18 @@ class FeedViewController: UITableViewController, RedditFeedView, UITableViewData
 extension FeedViewController: CellDestructionView {
     func removeCell(at index: IndexPath) {
         tableModel.remove(at: index.row)
+    }
+}
+
+extension FeedViewController: ExpandedImagePresenterView {
+    func presentExpanedImage(at url: URL) {
+        cachedImageUrl = url
+        performSegue(withIdentifier: "showExpandedImageController", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let nextViewController = segue.destination as? ExpandedImageController,
+              let url = cachedImageUrl else { return }
+        nextViewController.url = url
     }
 }

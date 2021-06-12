@@ -12,6 +12,7 @@ protocol CellControllerDelegate {
     func didCancelImageRequest()
     func didRequestSaveImage(with url: URL)
     func didRequestRemoveCell(at index: IndexPath)
+    func didRequestExpandImage(with url: URL)
 }
 
 class CellController: Hashable, ImagePresenterView {
@@ -42,6 +43,11 @@ class CellController: Hashable, ImagePresenterView {
         cell?.authorAndTimeLabel?.text = viewModel.timeAndAuthor
         cell?.isReadedContainer.isReaded = isVisited
         cell?.saveImage.isHidden = viewModel.imageURL == nil
+        
+        cell?.onImageTap = { [weak self] in
+            guard let self = self, let url = viewModel.imageURL else { return }
+            self.delegate.didRequestExpandImage(with: url)
+        }
         
         cell?.onRemoveTap = { [weak self] in
             guard let self = self else { return }

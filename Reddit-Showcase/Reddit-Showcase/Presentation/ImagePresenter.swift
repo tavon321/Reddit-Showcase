@@ -18,16 +18,23 @@ public protocol CellDestructionView: AnyObject {
     func removeCell(at index: IndexPath)
 }
 
+public protocol ExpandedImagePresenterView: AnyObject {
+    func presentExpanedImage(at url: URL)
+}
+
 public class ImagePresenter<View: ImagePresenterView, Image> where View.Image == Image {
     private weak var view: View?
     private weak var cellDestructionView: CellDestructionView?
+    private weak var expandedImagePresenterView: ExpandedImagePresenterView?
     private let imageTransformer: (Data) -> Image?
     
     public init(view: View,
                 cellDestructionView: CellDestructionView?,
+                expandedImagePresenterView: ExpandedImagePresenterView?,
                 imageTransformer: @escaping (Data) -> Image?) {
         self.view = view
         self.cellDestructionView = cellDestructionView
+        self.expandedImagePresenterView = expandedImagePresenterView
         self.imageTransformer = imageTransformer
     }
     
@@ -77,5 +84,9 @@ public class ImagePresenter<View: ImagePresenterView, Image> where View.Image ==
     
     public func deleteRow(at indexPath: IndexPath) {
         cellDestructionView?.removeCell(at: indexPath)
+    }
+    
+    public func displayExpandedImage(with url: URL) {
+        expandedImagePresenterView?.presentExpanedImage(at: url)
     }
 }

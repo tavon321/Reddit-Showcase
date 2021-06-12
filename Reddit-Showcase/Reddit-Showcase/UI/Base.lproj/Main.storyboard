@@ -11,7 +11,7 @@
         <!--Feed View Controller-->
         <scene sceneID="tZE-ZF-uZT">
             <objects>
-                <tableViewController id="FgX-fB-Z6A" customClass="FeedViewController" customModule="Reddit_Showcase" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="FeedViewController" id="FgX-fB-Z6A" customClass="FeedViewController" customModule="Reddit_Showcase" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="hpK-J6-pGl">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -223,6 +223,9 @@
                             <action selector="refresh" destination="FgX-fB-Z6A" eventType="valueChanged" id="wUk-ah-Nqy"/>
                         </connections>
                     </refreshControl>
+                    <connections>
+                        <segue destination="1Gz-fn-xn0" kind="presentation" identifier="showExpandedImageController" id="nBB-ya-Uln"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Uvl-FA-O8W" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <tapGestureRecognizer id="WMU-cJ-Gvo">
@@ -233,6 +236,40 @@
             </objects>
             <point key="canvasLocation" x="115.94202898550725" y="208.92857142857142"/>
         </scene>
+        <!--Expanded Image Controller-->
+        <scene sceneID="ISi-uU-cCT">
+            <objects>
+                <viewController storyboardIdentifier="ExpandedImageController" id="1Gz-fn-xn0" customClass="ExpandedImageController" customModule="Reddit_Showcase" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ggG-xA-2JW">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JpP-su-8bk">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <wkWebViewConfiguration key="configuration">
+                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                    <wkPreferences key="preferences"/>
+                                </wkWebViewConfiguration>
+                            </wkWebView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="9IJ-D5-BUu"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="9IJ-D5-BUu" firstAttribute="trailing" secondItem="JpP-su-8bk" secondAttribute="trailing" id="H3c-pK-2uQ"/>
+                            <constraint firstItem="JpP-su-8bk" firstAttribute="leading" secondItem="9IJ-D5-BUu" secondAttribute="leading" id="TMw-ze-Npt"/>
+                            <constraint firstItem="9IJ-D5-BUu" firstAttribute="bottom" secondItem="JpP-su-8bk" secondAttribute="bottom" id="czh-Eh-9I3"/>
+                            <constraint firstItem="JpP-su-8bk" firstAttribute="top" secondItem="9IJ-D5-BUu" secondAttribute="top" id="zBn-GV-tT9"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="webView" destination="JpP-su-8bk" id="uS9-uZ-Fbo"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Zl6-ia-js7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="960" y="217"/>
+        </scene>
     </scenes>
     <resources>
         <image name="comments-icon" width="452" height="452"/>
@@ -240,6 +277,9 @@
         <image name="palceholder-image" width="512" height="512"/>
         <image name="square.and.arrow.down.fill" catalog="system" width="121" height="128"/>
         <image name="xmark.diamond.fill" catalog="system" width="128" height="122"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="systemRedColor">
             <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

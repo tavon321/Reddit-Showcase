@@ -24,6 +24,7 @@ class RedditFeedCell: UITableViewCell {
         super.awakeFromNib()
         selectionStyle = .none
         
+        thumbnailImageView.isUserInteractionEnabled = true
         thumbnailImageView.addTapGesture(action: #selector(thumbnailImageViewTapped), target: self)
         saveImage.addTapGesture(action: #selector(saveImageViewTapped), target: self)
         removeCell.addTapGesture(action: #selector(removeCellViewTapped), target: self)
@@ -36,7 +37,9 @@ class RedditFeedCell: UITableViewCell {
     }
     
     @objc private func thumbnailImageViewTapped() {
-        onImageTap?()
+        thumbnailImageView.showAnimation { [weak self] in
+            self?.onImageTap?()
+        }
     }
     
     @objc private func removeCellViewTapped() {

@@ -25,12 +25,13 @@ final class FeedViewAdapter: RedditListView {
             let adapter = ReddiImageLoaderPresentationAdapter<CellController, UIImage>(model: model,
                                                                                        imageLoader: imageLoader,
                                                                                        imageSaver: imageSaver)
-            let controller = CellController(thumbnailUrl: model.thumbnail, model: model, delegate: adapter)
-            adapter.presenter = ImagePresenter(view: controller,
+            let cellController = CellController(thumbnailUrl: model.thumbnail, model: model, delegate: adapter)
+            adapter.presenter = ImagePresenter(view: cellController,
                                                cellDestructionView: self.controller,
+                                               expandedImagePresenterView: self.controller,
                                                imageTransformer: UIImage.init)
             
-            return controller
+            return cellController
         }), page: viewModel.pagination ?? "")
     }
 }
