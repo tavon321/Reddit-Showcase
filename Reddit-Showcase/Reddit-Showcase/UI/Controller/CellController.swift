@@ -11,6 +11,7 @@ protocol CellControllerDelegate {
     func didRequestImage(with url: URL)
     func didCancelImageRequest()
     func didRequestSaveImage(with url: URL)
+    func didRequestRemoveCell(at index: IndexPath)
 }
 
 class CellController: Hashable, ImagePresenterView {
@@ -18,6 +19,7 @@ class CellController: Hashable, ImagePresenterView {
     private var cell: RedditFeedCell?
     private let thumbnailUrl: URL?
     private let model: FeedViewModel
+    private var indexpath: IndexPath = IndexPath()
     private var isVisited: Bool = false
     
     public init(thumbnailUrl: URL?, model: FeedViewModel, delegate: CellControllerDelegate) {
@@ -27,9 +29,10 @@ class CellController: Hashable, ImagePresenterView {
     }
     
     func view(in tableView: UITableView, at indexpath: IndexPath) -> UITableViewCell {
-        cell = tableView.dequeueReusableCell(at: indexpath)
-        preload()
-        return cell!
+        self.cell = tableView.dequeueReusableCell(at: indexpath)
+        self.indexpath = indexpath
+        self.preload()
+        return self.cell!
     }
     
     public func display(_ viewModel: FeedImageViewModel<UIImage>) {
@@ -39,6 +42,11 @@ class CellController: Hashable, ImagePresenterView {
         cell?.authorAndTimeLabel?.text = viewModel.timeAndAuthor
         cell?.isReadedContainer.isHidden = !isVisited
         cell?.saveImage.isHidden = viewModel.imageURL == nil
+        
+        cell?.onRemoveTap = { [weak self] in
+            guard let self = self else { return }
+            self.delegate.didRequestRemoveCell(at: self.indexpath)
+        }
         
         cell?.onSaveTap = { [weak self] in
             guard let self = self, let url = viewModel.imageURL else { return }

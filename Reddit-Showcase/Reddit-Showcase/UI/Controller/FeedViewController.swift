@@ -127,3 +127,10 @@ class FeedViewController: UITableViewController, RedditFeedView, UITableViewData
         loadingControllers[indexPath] = nil
     }
 }
+
+extension FeedViewController: CellDestructionView {
+    func removeCell(at index: IndexPath) {
+        tableModel.remove(at: index.row)
+        dataSource?.applySnapshot(for: tableModel)
+    }
+}

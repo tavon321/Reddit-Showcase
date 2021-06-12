@@ -21,14 +21,17 @@ class ImagePresenterTests: XCTestCase {
         
         sut.didStartLoadingImageData(for: model)
         
-        let message = view.messages.first
+        guard case let .displayImage(message) = view.messages.first else {
+            XCTFail("Wrong message type \(view.messages.first!)")
+            return
+        }
         XCTAssertEqual(view.messages.count, 1)
-        XCTAssertEqual(message?.title, model.title)
-        XCTAssertEqual(message?.author, model.author)
-        XCTAssertNotNil(message?.elapsedInterval)
-        XCTAssertEqual(message?.numberOfComments, model.numberOfComments)
-        XCTAssertEqual(message?.imageURL, model.imageURL)
-        XCTAssertEqual(message?.isLoading, true)
+        XCTAssertEqual(message.title, model.title)
+        XCTAssertEqual(message.author, model.author)
+        XCTAssertNotNil(message.elapsedInterval)
+        XCTAssertEqual(message.numberOfComments, model.numberOfComments)
+        XCTAssertEqual(message.imageURL, model.imageURL)
+        XCTAssertEqual(message.isLoading, true)
     }
     
     func test_didFinishLoadingImageData_Ok_displayViewModelWithImage() {
@@ -38,15 +41,18 @@ class ImagePresenterTests: XCTestCase {
         
         sut.didFinishLoadingImageData(with: Data(), for: model)
         
-        let message = view.messages.first
+        guard case let .displayImage(message) = view.messages.first else {
+            XCTFail("Wrong message type \(view.messages.first!)")
+            return
+        }
         XCTAssertEqual(view.messages.count, 1)
-        XCTAssertEqual(message?.title, model.title)
-        XCTAssertEqual(message?.author, model.author)
-        XCTAssertNotNil(message?.elapsedInterval)
-        XCTAssertEqual(message?.numberOfComments, model.numberOfComments)
-        XCTAssertEqual(message?.imageURL, model.imageURL)
-        XCTAssertEqual(message?.isLoading, false)
-        XCTAssertEqual(message?.thumbnail, transformedData)
+        XCTAssertEqual(message.title, model.title)
+        XCTAssertEqual(message.author, model.author)
+        XCTAssertNotNil(message.elapsedInterval)
+        XCTAssertEqual(message.numberOfComments, model.numberOfComments)
+        XCTAssertEqual(message.imageURL, model.imageURL)
+        XCTAssertEqual(message.isLoading, false)
+        XCTAssertEqual(message.thumbnail, transformedData)
     }
     
     func test_didFinishLoadingmageData_Error_displayViewModelWithoutImage() {
@@ -56,15 +62,22 @@ class ImagePresenterTests: XCTestCase {
         
         sut.didFinishLoadingImageData(with: anyNSError, for: model)
         
-        let message = view.messages.first
+        guard case let .displayImage(message) = view.messages.first else {
+            XCTFail("Wrong message type \(view.messages.first!)")
+            return
+        }
         XCTAssertEqual(view.messages.count, 1)
-        XCTAssertEqual(message?.title, model.title)
-        XCTAssertEqual(message?.author, model.author)
-        XCTAssertNotNil(message?.elapsedInterval)
-        XCTAssertEqual(message?.numberOfComments, model.numberOfComments)
-        XCTAssertEqual(message?.imageURL, model.imageURL)
-        XCTAssertEqual(message?.isLoading, false)
-        XCTAssertEqual(message?.thumbnail, nil)
+        XCTAssertEqual(message.title, model.title)
+        XCTAssertEqual(message.author, model.author)
+        XCTAssertNotNil(message.elapsedInterval)
+        XCTAssertEqual(message.numberOfComments, model.numberOfComments)
+        XCTAssertEqual(message.imageURL, model.imageURL)
+        XCTAssertEqual(message.isLoading, false)
+        XCTAssertEqual(message.thumbnail, nil)
+    }
+    
+    func test_didStartSavingData_messageViewToStartLoading() {
+        
     }
     
     // MARK: Helpers
@@ -76,18 +89,32 @@ class ImagePresenterTests: XCTestCase {
                          line: UInt = #line)
     -> (sut: ImagePresenter<ViewSpy, AnyImage>, view: ViewSpy) {
         let view = ViewSpy()
-        let sut = ImagePresenter(view: view, imageTransformer: imageTransformer)
+        let sut = ImagePresenter(view: view, cellDestructionView: view, imageTransformer: imageTransformer)
         
         trackForMemoryLeaks(view, file: file, line: line)
         trackForMemoryLeaks(sut, file: file, line: line)
         return (sut, view)
     }
     
-    private class ViewSpy: ImagePresenterView {
-        private(set) var messages = [FeedImageViewModel<AnyImage>]()
+    private class ViewSpy: ImagePresenterView, CellDestructionView {
+        private(set) var messages = [Message]()
+        
+        enum Message {
+            case displayImage(FeedImageViewModel<AnyImage>)
+        }
         
         func display(_ model: FeedImageViewModel<AnyImage>) {
-            messages.append(model)
+            messages.append(.displayImage(model))
+        }
+        
+        func diplay(isSavingData: Bool) {
+        }
+        
+        func diplay(didFinishSavingDataSuccessfully: Bool) {
+            
+        }
+        
+        func removeCell(at index: IndexPath) {
         }
     }
 }

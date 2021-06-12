@@ -14,12 +14,20 @@ public protocol ImagePresenterView: AnyObject {
     func diplay(didFinishSavingDataSuccessfully: Bool)
 }
 
+public protocol CellDestructionView: AnyObject {
+    func removeCell(at index: IndexPath)
+}
+
 public class ImagePresenter<View: ImagePresenterView, Image> where View.Image == Image {
     private weak var view: View?
+    private weak var cellDestructionView: CellDestructionView?
     private let imageTransformer: (Data) -> Image?
     
-    public init(view: View, imageTransformer: @escaping (Data) -> Image?) {
+    public init(view: View,
+                cellDestructionView: CellDestructionView?,
+                imageTransformer: @escaping (Data) -> Image?) {
         self.view = view
+        self.cellDestructionView = cellDestructionView
         self.imageTransformer = imageTransformer
     }
     
