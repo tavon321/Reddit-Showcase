@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 class MainThreadRedditTopFeedLoader: RedditTopFeedLoader {
     private let loader: RedditTopFeedLoader
@@ -39,8 +40,13 @@ class MainThreadImageDataLoader: ImageDataLoader {
     }
 }
 
+class AppState: ObservableObject  {
+    @Published var currentPage = ""
+}
+
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
+    var appState = AppState()
     
     private lazy var httpClient: HTTPClient = {
         URLSessionHTTPClient()
@@ -62,15 +68,50 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let scene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: scene)
+        
+        if let activity = session.stateRestorationActivity {
+            appState.restore(from: activity)
+        }
+        
         configureWindow()
     }
     
     func configureWindow() {
-        let controller = RedditFeedUIComposer.compose(feedLoader: MainThreadRedditTopFeedLoader(loader: feedloader),
+        let controller = RedditFeedUIComposer.compose(state: appState,
+                                                      feedLoader: MainThreadRedditTopFeedLoader(loader: feedloader),
                                                       imageLoader: MainThreadImageDataLoader(loader: imageLoader),
                                                       imageSaver: imageSaver)
         window?.rootViewController = UINavigationController(rootViewController: controller)
-        
         window?.makeKeyAndVisible()
+    }
+    
+    func stateRestorationActivity(for scene: UIScene) -> NSUserActivity? {
+        let activity = NSUserActivity(activityType: Bundle.main.activityType)
+        appState.store(in: activity)
+        return activity
+    }
+}
+
+extension AppState {
+    func restore(from activity: NSUserActivity) {
+        guard activity.activityType == Bundle.main.activityType,
+            let currentPage = activity.userInfo?[Key.currentPage] as? String
+            else { return }
+        
+        self.currentPage = currentPage
+    }
+    
+    func store(in activity: NSUserActivity) {
+        activity.addUserInfoEntries(from: [Key.currentPage: currentPage])
+    }
+    
+    private enum Key {
+        static let currentPage = "currentPage"
+    }
+}
+
+extension Bundle {
+    var activityType: String {
+        return Bundle.main.infoDictionary?["NSUserActivityTypes"].flatMap { ($0 as? [String])?.first } ?? ""
     }
 }

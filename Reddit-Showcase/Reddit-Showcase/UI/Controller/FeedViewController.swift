@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 public protocol FeedViewControllerDelegate {
     func didRequestFeedRefresh(page: String)
@@ -16,6 +17,7 @@ class FeedViewController: UITableViewController, RedditFeedView, UITableViewData
     private var dataSource: FeedViewControllerDataSource!
     
     public var delegate: FeedViewControllerDelegate?
+    @Published  var state: AppState?
     
     private var currentPage: String = ""
     private var isFetchInProgress: Bool = false
@@ -29,7 +31,7 @@ class FeedViewController: UITableViewController, RedditFeedView, UITableViewData
     public override func viewDidLoad() {
         super.viewDidLoad()
         configTable()
-        delegate?.didRequestFeedRefresh(page: currentPage)
+        delegate?.didRequestFeedRefresh(page: state?.currentPage ?? "")
         configureDismissAllButton()
     }
     
@@ -119,6 +121,11 @@ class FeedViewController: UITableViewController, RedditFeedView, UITableViewData
         }
     }
     
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        guard let firstVisibleIndexPath = tableView.indexPathsForVisibleRows?.first else { return }
+        state?.currentPage = cellController(forRowAt: firstVisibleIndexPath).name
+    }
+    
     private func isLoadingCell(for indexPath: IndexPath) -> Bool {
         return indexPath.row >= tableModel.count - 1
     }
@@ -145,29 +152,5 @@ extension FeedViewController: ExpandedImagePresenterView {
         guard let nextViewController = segue.destination as? ExpandedImageController,
               let url = cachedImageUrl else { return }
         nextViewController.url = url
-    }
-}
-
-// Restore
-extension FeedViewController {
-    private var currentPageRestorationKey: String { "currentPage" }
-    
-    override func encodeRestorableState(with coder: NSCoder) {
-        guard let fistVisibleCell = tableView.visibleCells.first,
-              let indexPath = tableView.indexPath(for: fistVisibleCell) else { return }
-        
-        print(cellController(forRowAt: indexPath).name)
-        
-        coder.encode(cellController(forRowAt: indexPath).name, forKey:currentPageRestorationKey)
-        
-        super.encodeRestorableState(with: coder)
-    }
-
-    override func decodeRestorableState(with coder: NSCoder) {
-        guard let currentPage =
-                coder.decodeObject(forKey: currentPageRestorationKey) as? String else { return }
-        
-        print(currentPage)
-        self.currentPage = currentPage
     }
 }
