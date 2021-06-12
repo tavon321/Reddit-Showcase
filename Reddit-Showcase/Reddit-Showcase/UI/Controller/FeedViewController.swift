@@ -147,3 +147,17 @@ extension FeedViewController: ExpandedImagePresenterView {
         nextViewController.url = url
     }
 }
+
+// Restore
+//extension FeedViewController {
+//    override func encodeRestorableState(with coder: NSCoder) {
+//        coder.encode(selectedSuperheroId.rawValue, forKey: "imageId")
+//        super.encodeRestorableState(with: coder)
+//    }
+//
+//    override func decodeRestorableState(with coder: NSCoder) {
+//        guard let id = SuperHeroType(rawValue: coder.decodeInteger(forKey: "imageId")) else { return }
+//        selectedSuperheroId =  id
+//        setImage()
+//    }
+//}

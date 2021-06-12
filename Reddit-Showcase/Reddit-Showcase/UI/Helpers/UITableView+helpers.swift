@@ -20,3 +20,10 @@ extension UITableView {
         }
     }
 }
+
+extension UITableView {
+    func dequeueReusableCell<T: UITableViewCell>(at index: IndexPath) -> T {
+        let identifier = String(describing: T.self)
+        return dequeueReusableCell(withIdentifier: identifier, for: index) as! T
+    }
+}

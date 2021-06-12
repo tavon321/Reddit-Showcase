@@ -25,7 +25,7 @@ final class FeedViewAdapter: RedditListView {
             let adapter = ReddiImageLoaderPresentationAdapter<CellController, UIImage>(model: model,
                                                                                        imageLoader: imageLoader,
                                                                                        imageSaver: imageSaver)
-            let cellController = CellController(thumbnailUrl: model.thumbnail, model: model, delegate: adapter)
+            let cellController = CellController(thumbnailUrl: model.thumbnail, delegate: adapter)
             adapter.presenter = ImagePresenter(view: cellController,
                                                cellDestructionView: self.controller,
                                                expandedImagePresenterView: self.controller,

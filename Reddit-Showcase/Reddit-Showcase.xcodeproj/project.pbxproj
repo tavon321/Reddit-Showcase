@@ -215,7 +215,6 @@
 			children = (
 				713778A226741D3D0017FE16 /* URL+SharedHelpers.swift */,
 				713778B1267433BC0017FE16 /* guaranteeMainThread.swift */,
-				71926D142675181200E593C2 /* UIView+Helpers.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -225,6 +224,7 @@
 			children = (
 				713778AF26742E010017FE16 /* UITableView+helpers.swift */,
 				71926D082674FFB600E593C2 /* UIRefreshControl+Helpers.swift */,
+				71926D142675181200E593C2 /* UIView+Helpers.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";

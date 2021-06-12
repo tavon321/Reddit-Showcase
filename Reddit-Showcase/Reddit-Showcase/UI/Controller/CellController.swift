@@ -15,18 +15,16 @@ protocol CellControllerDelegate {
     func didRequestExpandImage(with url: URL)
 }
 
-class CellController: Hashable, ImagePresenterView {
+final class CellController: Hashable, ImagePresenterView {
     private let delegate: CellControllerDelegate
     private var cell: RedditFeedCell?
     private let thumbnailUrl: URL?
-    private let model: FeedViewModel
     private var indexpath: IndexPath = IndexPath()
     private var isVisited: Bool = false
     
-    public init(thumbnailUrl: URL?, model: FeedViewModel, delegate: CellControllerDelegate) {
+    public init(thumbnailUrl: URL?, delegate: CellControllerDelegate) {
         self.delegate = delegate
         self.thumbnailUrl = thumbnailUrl
-        self.model = model
     }
     
     func view(in tableView: UITableView, at indexpath: IndexPath) -> UITableViewCell {
@@ -84,17 +82,10 @@ class CellController: Hashable, ImagePresenterView {
     }
     
     public func hash(into hasher: inout Hasher) {
-        return hasher.combine(model)
+        return hasher.combine(cell)
     }
     
     public static func == (lhs: CellController, rhs: CellController) -> Bool {
-        return lhs.model == rhs.model
-    }
-}
-
-private extension UITableView {
-    func dequeueReusableCell<T: UITableViewCell>(at index: IndexPath) -> T {
-        let identifier = String(describing: T.self)
-        return dequeueReusableCell(withIdentifier: identifier, for: index) as! T
+        return lhs.cell == rhs.cell
     }
 }
