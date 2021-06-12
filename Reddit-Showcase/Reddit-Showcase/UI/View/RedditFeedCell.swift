@@ -12,18 +12,33 @@ class RedditFeedCell: UITableViewCell {
     @IBOutlet private(set) var thumbnailImageView: UIImageView!
     @IBOutlet private(set) var commentLabel: UILabel!
     @IBOutlet private(set) var isReadedContainer: UIStackView!
+    @IBOutlet private(set) var saveImage: UIStackView!
     @IBOutlet private(set) var authorAndTimeLabel: UILabel!
     
-    var onTap: (() -> Void)?
+    var onImageTap: (() -> Void)?
+    var onSaveTap: (() -> Void)?
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(thumbnailImageViewTapped))
-        thumbnailImageView.addGestureRecognizer(tapGesture)
         selectionStyle = .none
+        
+        thumbnailImageView.addTapGesture(action: #selector(thumbnailImageViewTapped))
+        saveImage.addTapGesture(action:  #selector(thumbnailImageViewTapped))
+    }
+    
+    @objc private func saveImageViewTapped() {
+        onSaveTap?()
     }
     
     @objc private func thumbnailImageViewTapped() {
-        onTap?()
+        onImageTap?()
+    }
+}
+
+
+extension UIView {
+    func addTapGesture(action: Selector?) {
+        let tapGesture = UITapGestureRecognizer(target: self, action: action)
+        addGestureRecognizer(tapGesture)
     }
 }
