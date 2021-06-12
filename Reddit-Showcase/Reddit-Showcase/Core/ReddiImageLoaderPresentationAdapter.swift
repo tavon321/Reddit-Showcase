@@ -5,9 +5,12 @@
 //  Created by Gustavo on 11/06/21.
 //
 
-import Foundation
+import UIKit
 
 class ReddiImageLoaderPresentationAdapter<View: ImagePresenterView, Image>: CellControllerDelegate where View.Image == Image {
+   
+    
+    
     private let model: FeedViewModel
     private let imageLoader: ImageDataLoader
     private var cache = NSCache<NSURL, NSData>()
@@ -38,6 +41,9 @@ class ReddiImageLoaderPresentationAdapter<View: ImagePresenterView, Image>: Cell
                 }
             }
         }
+    }
+    
+    func didRequestSaveImage(with url: URL) {
     }
     
     func didCancelImageRequest() {

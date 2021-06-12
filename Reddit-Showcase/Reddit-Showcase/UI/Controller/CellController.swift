@@ -10,6 +10,7 @@ import UIKit
 protocol CellControllerDelegate {
     func didRequestImage(with url: URL)
     func didCancelImageRequest()
+    func didRequestSaveImage(with url: URL)
 }
 
 class CellController: Hashable, ImagePresenterView {

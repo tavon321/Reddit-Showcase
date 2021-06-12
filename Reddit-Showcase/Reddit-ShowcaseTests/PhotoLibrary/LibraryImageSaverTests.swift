@@ -17,18 +17,19 @@ class LibraryImageSaverTests: XCTestCase {
     }
     
     func test_save_messageLibraryWithImage() {
-        let (sut, library) = makeSUT()
-        let expectedImage = anyImage
+        let expectedImage = AnyImage()
+        let (sut, library) = makeSUT(imageTransformer: { _ in expectedImage })
+       
         
-        sut.save(expectedImage) { _ in }
+        sut.save(anyData) { _ in }
         XCTAssertEqual(library.images, [expectedImage])
     }
     
     func test_save_deliversErrorOnSaveError() {
-        let (sut, library) = makeSUT()
+        let (sut, library) = makeSUT(imageTransformer: { _ in AnyImage() })
         
         var capturedError: Error?
-        sut.save(anyImage) { error in
+        sut.save(anyData) { error in
             capturedError = error
         }
         
@@ -37,11 +38,11 @@ class LibraryImageSaverTests: XCTestCase {
     }
     
     func test_save_doesNotDeliversErrorOnSaveError() {
-        let (sut, library) = makeSUT()
+        let (sut, library) = makeSUT(imageTransformer: { _ in AnyImage() })
         let expectedError = anyNSError
         
         var capturedError: Error?
-        sut.save(anyImage) { error in
+        sut.save(anyData) { error in
             capturedError = error
         }
         
@@ -50,12 +51,14 @@ class LibraryImageSaverTests: XCTestCase {
     }
     
     // MARK: - Helpers
-    private var anyImage: UIImage {  UIImage() }
+    private struct AnyImage: Equatable {}
     
-    private func makeSUT(file: StaticString = #file,
-                         line: UInt = #line) -> (sut: LibraryImageSaver, library: PhotoLibrarySpy) {
+    private func makeSUT(imageTransformer: @escaping (Data) -> AnyImage? = { _ in nil },
+                         file: StaticString = #file,
+                         line: UInt = #line)
+    -> (sut: LibraryImageSaver<PhotoLibrarySpy, AnyImage>, library: PhotoLibrarySpy) {
         let library = PhotoLibrarySpy()
-        let sut = LibraryImageSaver(photoLibrary: library)
+        let sut = LibraryImageSaver(photoLibrary: library, imageTransformer: imageTransformer)
         
         trackForMemoryLeaks(library, file: file, line: line)
         trackForMemoryLeaks(sut, file: file, line: line)
@@ -65,10 +68,10 @@ class LibraryImageSaverTests: XCTestCase {
     
     
     private class PhotoLibrarySpy: PhotoLibrary {
-        private(set) var messages = [(image: UIImage, completion: (PhotoLibrary.Result) -> Void)]()
-        var images: [UIImage] { messages.map({ $0.image }) }
+        private(set) var messages = [(image: AnyImage, completion: (PhotoLibrary.Result) -> Void)]()
+        var images: [AnyImage] { messages.map({ $0.image }) }
         
-        func save(_ image: UIImage, completion: @escaping (PhotoLibrary.Result) -> Void) {
+        func save(_ image: AnyImage, completion: @escaping (PhotoLibrary.Result) -> Void) {
             messages.append((image, completion: completion))
         }
         
