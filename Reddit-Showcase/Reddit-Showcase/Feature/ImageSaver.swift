@@ -7,8 +7,8 @@
 
 import UIKit
 
-protocol ImageSaver {
-    typealias Result = Swift.Result<UIImage, Error>
+public protocol ImageSaver {
+    typealias Result = Error?
     
     func save(_ image: UIImage, completion: @escaping (Result) -> Void)
 }

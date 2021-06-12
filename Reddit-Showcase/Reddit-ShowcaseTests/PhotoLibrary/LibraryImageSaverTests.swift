@@ -20,8 +20,21 @@ class LibraryImageSaverTests: XCTestCase {
         let (sut, library) = makeSUT()
         let expectedImage = anyImage
         
-        sut.save(expectedImage)
-        XCTAssertEqual(library.messages, [expectedImage])
+        sut.save(expectedImage) { _ in }
+        XCTAssertEqual(library.images, [expectedImage])
+    }
+    
+    func test_save_deliversErrorOnSaveError() {
+        let (sut, library) = makeSUT()
+        let expectedError = anyNSError
+        
+        var capturedError: Error?
+        sut.save(anyImage) { error in
+            capturedError = error
+        }
+        
+        library.complete(with: expectedError)
+        XCTAssertEqual(capturedError as NSError?, expectedError)
     }
     
     // MARK: - Helpers
@@ -40,10 +53,15 @@ class LibraryImageSaverTests: XCTestCase {
     
     
     private class PhotoLibrarySpy: PhotoLibrary {
-        private(set) var messages = [UIImage]()
+        private(set) var messages = [(image: UIImage, completion: (PhotoLibrary.Result) -> Void)]()
+        var images: [UIImage] { messages.map({ $0.image }) }
         
-        func save(_ image: UIImage) {
-            messages.append(image)
+        func save(_ image: UIImage, completion: @escaping (PhotoLibrary.Result) -> Void) {
+            messages.append((image, completion: completion))
+        }
+        
+        func complete(with error: Error?, at index: Int = 0) {
+            messages[index].completion(error)
         }
     }
 }
