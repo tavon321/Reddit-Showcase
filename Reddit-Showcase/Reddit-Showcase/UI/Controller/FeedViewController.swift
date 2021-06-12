@@ -131,6 +131,5 @@ class FeedViewController: UITableViewController, RedditFeedView, UITableViewData
 extension FeedViewController: CellDestructionView {
     func removeCell(at index: IndexPath) {
         tableModel.remove(at: index.row)
-        dataSource?.applySnapshot(for: tableModel)
     }
 }

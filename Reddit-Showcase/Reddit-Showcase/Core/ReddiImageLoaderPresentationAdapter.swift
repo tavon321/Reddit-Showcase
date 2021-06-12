@@ -65,6 +65,6 @@ class ReddiImageLoaderPresentationAdapter<View: ImagePresenterView, Image>: Cell
     }
     
     func didRequestRemoveCell(at index: IndexPath) {
-        
+        presenter?.deleteRow(at: index)
     }
 }

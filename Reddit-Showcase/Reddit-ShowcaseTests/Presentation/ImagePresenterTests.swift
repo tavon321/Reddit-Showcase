@@ -88,6 +88,15 @@ class ImagePresenterTests: XCTestCase {
         XCTAssertEqual(view.saveMessages, [.isSavingData(false), .displayError(false)])
     }
     
+    func test_deleteRowAtIndex_messageViewToDeleteRow() {
+        let (sut, view) = makeSUT()
+        let expetedIndex = IndexPath()
+        
+        sut.deleteRow(at: expetedIndex)
+        
+        XCTAssertEqual(view.saveMessages, [.delete(expetedIndex)])
+    }
+    
     // MARK: Helpers
     private var feedModel = FeedViewModel(item: sampleFeed)
     private struct AnyImage: Equatable {}
@@ -111,6 +120,7 @@ class ImagePresenterTests: XCTestCase {
         enum SaveMessage: Equatable {
             case isSavingData(Bool)
             case displayError(Bool)
+            case delete(IndexPath)
         }
         
         func display(_ model: FeedImageViewModel<AnyImage>) {
@@ -126,6 +136,7 @@ class ImagePresenterTests: XCTestCase {
         }
         
         func removeCell(at index: IndexPath) {
+            saveMessages.append(.delete(index))
         }
     }
 }

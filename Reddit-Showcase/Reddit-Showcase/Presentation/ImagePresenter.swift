@@ -74,4 +74,8 @@ public class ImagePresenter<View: ImagePresenterView, Image> where View.Image ==
         view?.diplay(isSavingData: false)
         view?.diplay(didFinishSavingDataSuccessfully: true)
     }
+    
+    public func deleteRow(at indexPath: IndexPath) {
+        cellDestructionView?.removeCell(at: indexPath)
+    }
 }

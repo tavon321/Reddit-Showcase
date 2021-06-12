@@ -74,7 +74,7 @@ class CellController: Hashable, ImagePresenterView {
     }
     
     func diplay(didFinishSavingDataSuccessfully: Bool) {
-        cell?.saveImage.finish(error: didFinishSavingDataSuccessfully)
+        cell?.saveImage.finish(error: !didFinishSavingDataSuccessfully)
     }
     
     public func hash(into hasher: inout Hasher) {
