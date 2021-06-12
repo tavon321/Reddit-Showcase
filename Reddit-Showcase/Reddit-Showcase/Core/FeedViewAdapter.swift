@@ -9,9 +9,9 @@ import UIKit
 
 final class FeedViewAdapter: RedditListView {
     private weak var controller: FeedViewController?
-    private let imageLoader: RemoteImageDataLoader
+    private let imageLoader: ImageDataLoader
     
-    init(controller: FeedViewController, imageLoader: RemoteImageDataLoader) {
+    init(controller: FeedViewController, imageLoader: ImageDataLoader) {
         self.controller = controller
         self.imageLoader = imageLoader
     }

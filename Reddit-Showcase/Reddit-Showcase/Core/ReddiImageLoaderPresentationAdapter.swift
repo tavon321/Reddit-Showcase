@@ -9,13 +9,13 @@ import Foundation
 
 class ReddiImageLoaderPresentationAdapter<View: ImagePresenterView, Image>: CellControllerDelegate where View.Image == Image {
     private let model: FeedViewModel
-    private let imageLoader: RemoteImageDataLoader
+    private let imageLoader: ImageDataLoader
     private var cache = NSCache<NSURL, NSData>()
     private var cancellable: HTTPClientTask?
     
     var presenter: ImagePresenter<View, Image>?
     
-    init(model: FeedViewModel, imageLoader: RemoteImageDataLoader) {
+    init(model: FeedViewModel, imageLoader: ImageDataLoader) {
         self.model = model
         self.imageLoader = imageLoader
     }

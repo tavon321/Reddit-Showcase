@@ -37,7 +37,8 @@
                                 <constraint firstAttribute="trailingMargin" secondItem="Ibr-P2-WpM" secondAttribute="trailing" id="Ptw-aN-icH"/>
                             </constraints>
                             <connections>
-                                <outlet property="label" destination="Ibr-P2-WpM" id="d71-nn-n8X"/>
+                                <outlet property="label" destination="Ibr-P2-WpM" id="cNq-NL-OGZ"/>
+                                <outletCollection property="gestureRecognizers" destination="WMU-cJ-Gvo" appends="YES" id="hxd-l7-gLR"/>
                             </connections>
                         </view>
                         <prototypes>
@@ -164,11 +165,13 @@
                             <outlet property="delegate" destination="FgX-fB-Z6A" id="hX6-Fa-gsK"/>
                         </connections>
                     </tableView>
-                    <connections>
-                        <outlet property="errorView" destination="Ibr-P2-WpM" id="FLe-bo-wyt"/>
-                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Uvl-FA-O8W" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="WMU-cJ-Gvo">
+                    <connections>
+                        <action selector="hideMessageAnimated" destination="Za6-66-ewu" id="Wqs-LV-pVH"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="115.94202898550725" y="208.92857142857142"/>
         </scene>
