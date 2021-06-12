@@ -18,6 +18,7 @@ class FeedViewController: UITableViewController, RedditFeedView {
     public var delegate: FeedViewControllerDelegate?
     
     private var currentPage: String = ""
+    private var isFetchInProgress: Bool = false
     
     private var loadingControllers = [IndexPath: CellController]()
     private var tableModel = [CellController]() {
@@ -56,6 +57,7 @@ class FeedViewController: UITableViewController, RedditFeedView {
     }
     
     func display(isLoading: Bool) {
+        isFetchInProgress = isLoading
         refreshControl?.update(isRefreshing: isLoading)
     }
     
