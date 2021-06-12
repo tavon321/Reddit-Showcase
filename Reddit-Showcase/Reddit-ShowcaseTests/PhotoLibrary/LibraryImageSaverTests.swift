@@ -8,7 +8,7 @@
 import XCTest
 import Reddit_Showcase
 
-class LibraryImageSaverTests: XCTest {
+class LibraryImageSaverTests: XCTestCase {
     
     func test_init_doesNoMessagePhotoLibrary() {
         let (_, library) = makeSUT()
@@ -27,9 +27,13 @@ class LibraryImageSaverTests: XCTest {
     // MARK: - Helpers
     private var anyImage: UIImage {  UIImage() }
     
-    private func makeSUT() -> (sut: LibraryImageSaver, library: PhotoLibrarySpy) {
+    private func makeSUT(file: StaticString = #file,
+                         line: UInt = #line) -> (sut: LibraryImageSaver, library: PhotoLibrarySpy) {
         let library = PhotoLibrarySpy()
         let sut = LibraryImageSaver(photoLibrary: library)
+        
+        trackForMemoryLeaks(library, file: file, line: line)
+        trackForMemoryLeaks(sut, file: file, line: line)
         
         return (sut: sut, library: library)
     }
