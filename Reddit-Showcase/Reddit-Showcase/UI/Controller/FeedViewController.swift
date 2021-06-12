@@ -39,8 +39,7 @@ class FeedViewController: UITableViewController, RedditFeedView {
     }
     
     @IBAction private func refresh() {
-        currentPage = ""
-        tableModel.removeAll()
+        removeOldCells()
         delegate?.didRequestFeedRefresh(page: "")
     }
     
@@ -51,9 +50,8 @@ class FeedViewController: UITableViewController, RedditFeedView {
     }
     
     func display(_ controllers: [CellController], page: String) {
-        loadingControllers = [:]
         currentPage = page
-        tableModel = controllers
+        tableModel.append(contentsOf: controllers)
     }
     
     func display(isLoading: Bool) {
@@ -63,6 +61,12 @@ class FeedViewController: UITableViewController, RedditFeedView {
     
     func display(_ viewModel: FeedErrorViewModel) {
         errorView?.message = viewModel.message
+    }
+    
+    private func removeOldCells() {
+        currentPage = ""
+        tableModel.removeAll()
+        loadingControllers = [:]
     }
     
     private func fecthMoreCells() {
