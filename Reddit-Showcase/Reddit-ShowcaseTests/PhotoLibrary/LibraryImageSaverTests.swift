@@ -26,6 +26,18 @@ class LibraryImageSaverTests: XCTestCase {
     
     func test_save_deliversErrorOnSaveError() {
         let (sut, library) = makeSUT()
+        
+        var capturedError: Error?
+        sut.save(anyImage) { error in
+            capturedError = error
+        }
+        
+        library.completeSucessfully()
+        XCTAssertNil(capturedError)
+    }
+    
+    func test_save_doesNotDeliversErrorOnSaveError() {
+        let (sut, library) = makeSUT()
         let expectedError = anyNSError
         
         var capturedError: Error?
@@ -62,6 +74,10 @@ class LibraryImageSaverTests: XCTestCase {
         
         func complete(with error: Error?, at index: Int = 0) {
             messages[index].completion(error)
+        }
+        
+        func completeSucessfully(at index: Int = 0) {
+            messages[index].completion(nil)
         }
     }
 }
