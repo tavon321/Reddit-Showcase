@@ -16,6 +16,7 @@ var sampleFeedList = makeFeed([sampleFeed],
                               pagination: "t3_nv6kri")
 var sampleFeed: RedditFeed {
     RedditFeed(title: "Wooo sled racing",
+               name: "t3_nv6kri",
                author: "t2_5qkq2got",
                entryDate: 1623195130.0,
                numberOfComments: "669",

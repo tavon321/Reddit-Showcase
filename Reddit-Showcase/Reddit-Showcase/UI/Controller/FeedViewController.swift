@@ -18,6 +18,7 @@ class FeedViewController: UITableViewController, RedditFeedView, UITableViewData
     public var delegate: FeedViewControllerDelegate?
     
     private var currentPage: String = ""
+    private var currentIndexPage: String = ""
     private var isFetchInProgress: Bool = false
     private var cachedImageUrl: URL?
     
@@ -29,7 +30,7 @@ class FeedViewController: UITableViewController, RedditFeedView, UITableViewData
     public override func viewDidLoad() {
         super.viewDidLoad()
         configTable()
-        delegate?.didRequestFeedRefresh(page: "")
+        delegate?.didRequestFeedRefresh(page: currentPage)
         configureDismissAllButton()
     }
     
@@ -149,15 +150,13 @@ extension FeedViewController: ExpandedImagePresenterView {
 }
 
 // Restore
-//extension FeedViewController {
-//    override func encodeRestorableState(with coder: NSCoder) {
-//        coder.encode(selectedSuperheroId.rawValue, forKey: "imageId")
-//        super.encodeRestorableState(with: coder)
-//    }
-//
-//    override func decodeRestorableState(with coder: NSCoder) {
-//        guard let id = SuperHeroType(rawValue: coder.decodeInteger(forKey: "imageId")) else { return }
-//        selectedSuperheroId =  id
-//        setImage()
-//    }
-//}
+extension FeedViewController {
+    override func encodeRestorableState(with coder: NSCoder) {
+        super.encodeRestorableState(with: coder)
+        coder.encode(currentPage, forKey: "currentPage")
+    }
+
+    override func decodeRestorableState(with coder: NSCoder) {
+        super.decodeRestorableState(with: coder)
+    }
+}

@@ -19,6 +19,7 @@ public struct RedditFeedList: Equatable {
 
 public struct RedditFeed: Equatable {
     public let title: String
+    public let name: String
     public let author: String
     public let entryDate: TimeInterval
     public let numberOfComments: String
@@ -27,6 +28,7 @@ public struct RedditFeed: Equatable {
     public let visited: Bool
     
     public init(title: String,
+                name: String,
                 author: String,
                 entryDate: TimeInterval,
                 numberOfComments: String,
@@ -34,6 +36,7 @@ public struct RedditFeed: Equatable {
                 imageURL: URL?,
                 visited: Bool) {
         self.title = title
+        self.name = name
         self.author = author
         self.entryDate = entryDate
         self.numberOfComments = numberOfComments

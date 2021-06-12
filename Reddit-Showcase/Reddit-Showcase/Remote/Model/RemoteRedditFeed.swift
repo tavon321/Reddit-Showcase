@@ -24,6 +24,7 @@ public struct RemoteRedditFeedList: Decodable {
 
 public struct RemoteRedditFeed: Decodable {
     public let title: String
+    public let name: String
     public let author: String
     public let entryDate: TimeInterval
     public let numberOfComments: Int
@@ -32,6 +33,7 @@ public struct RemoteRedditFeed: Decodable {
     public let visited: Bool
     
     public init(title: String,
+                name: String,
                 author: String,
                 entryDate: TimeInterval,
                 numberOfComments: Int,
@@ -39,6 +41,7 @@ public struct RemoteRedditFeed: Decodable {
                 imageURL: URL?,
                 visited: Bool) {
         self.title = title
+        self.name = name
         self.author = author
         self.entryDate = entryDate
         self.numberOfComments = numberOfComments
@@ -49,6 +52,7 @@ public struct RemoteRedditFeed: Decodable {
     
     enum CodingKeys: String, CodingKey {
         case title
+        case name
         case author = "author_fullname"
         case entryDate = "created"
         case numberOfComments = "num_comments"
@@ -69,6 +73,7 @@ extension Array where Element == RemoteRedditFeed {
         return self.map {
             let imageURL = $0.imageURL?.pathExtension == "jpg" ? $0.imageURL : nil
             return RedditFeed(title: $0.title,
+                              name: $0.name,
                               author: $0.author,
                               entryDate: $0.entryDate,
                               numberOfComments: "\($0.numberOfComments)",

@@ -44,7 +44,7 @@ class RemoteRedditTopFeedLoaderTests: XCTestCase {
     
     func test_loadFeed_deliversConnectivityErrorOnClientsError() {
         let (sut, client) = makeSUT(url: anyURL)
-
+        
         expect(sut, toCompleteWith: failure(.connectivity)) {
             client.complete(with: anyNSError)
         }
@@ -89,20 +89,21 @@ class RemoteRedditTopFeedLoaderTests: XCTestCase {
     func test_loadFeed_deliversFeedOn200WithFeedData() {
         let (sut, client) = makeSUT(url: anyURL)
         let feedItem = makeFeed([RedditFeed(title: "Wooo sled racing",
-                                                 author: "t2_5qkq2got",
-                                                 entryDate: 1623195130.0,
-                                                 numberOfComments: "669",
-                                                 thumbnail: URL(string: "https://b.thumbs.redditmedia.com/uXMEsf-87n4kIa_v93T_lmzKP5BjV-MC4appd9eXbio.jpg")!,
-                                                 imageURL: URL(string: "https://v.redd.it/7uce6qeb62471.jpg"),
-                                                 visited: false)],
-                                     pagination: "t3_nv6kri")
+                                            name: "t3_nv6kri",
+                                            author: "t2_5qkq2got",
+                                            entryDate: 1623195130.0,
+                                            numberOfComments: "669",
+                                            thumbnail: URL(string: "https://b.thumbs.redditmedia.com/uXMEsf-87n4kIa_v93T_lmzKP5BjV-MC4appd9eXbio.jpg")!,
+                                            imageURL: URL(string: "https://v.redd.it/7uce6qeb62471.jpg"),
+                                            visited: false)],
+                                pagination: "t3_nv6kri")
         
         expect(sut, toCompleteWith: .success(feedItem)) {
             let jsonData = loadJson(named: "FeedWithOneItem")!
             client.complete(statusCode: 200, data: jsonData)
         }
     }
-
+    
     // MARK: - Helpers
     private var anyPage: String { "any-page" }
     private var anyLimit: String { "50" }
